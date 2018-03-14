@@ -87,3 +87,16 @@ compiler that conforms to the standard.
 "%x"    -> hexadecimal representation
 "%c"    -> character
 ```
+
+### 1.3 The For Statement
+The `for` loop is a generalization of the `while` loop. It contains 3 parts :
+**initialization**, **condition** and **incrementation**.
+
+`for(fahr = 0; fahr <= 300; fahr = fahr + 20)`
+
+### 1.4 Symbolic Constants
+_Symbolic name (or symbolic constant)_ :
+```C
+#define name replacement_text
+```
+They are not variables, so no type. Usually in UPPERCASE.
