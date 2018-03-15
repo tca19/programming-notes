@@ -100,3 +100,27 @@ _Symbolic name (or symbolic constant)_ :
 #define name replacement_text
 ```
 They are not variables, so no type. Usually in UPPERCASE.
+
+### 1.5 Character Input and Output
+C deals with **streams of characters (text stream)**. Two main functions :
+  * `c = getchar()` : reads next input character from a text stream
+  * `putchar(c)` : print the character `c`.
+
+`getchar()` returns a special value when there is no more input : **EOF**
+(different from any char value, equal to -1 on my machine). So we need to
+declare `c` as an `int` to be able to handle this value.
+
+We can use assignment in a condition :
+```C
+/* precedence of != is higher than that of =, so without extra parentheses,
+   condition is evaluated as c = (getchar() != EOF) */
+while ((c = getchar()) != EOF)
+    putchar()
+```
+
+When counting words or characters, use a long variables : `long nc;` (because it
+can holds larger values, some architectures limit `int` to 16 bits, so 32767 is
+maximum value). Then use `printf("%ld\n", nc)` to print it.
+
+Since the condition in a `while()` loop or a `for()` loop is evaluated
+**before** entering the loop, the code returns 0 when there is no input.
