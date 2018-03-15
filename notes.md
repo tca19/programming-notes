@@ -122,5 +122,22 @@ When counting words or characters, use a long variables : `long nc;` (because it
 can holds larger values, some architectures limit `int` to 16 bits, so 32767 is
 maximum value). Then use `printf("%ld\n", nc)` to print it.
 
-Since the condition in a `while()` loop or a `for()` loop is evaluated
+Since the condition in a `while()` or a `for()` loop is evaluated
 **before** entering the loop, the code returns 0 when there is no input.
+
+A line is terminated by a `\n` character so to count number of lines, simply
+count the number of `\n`. A character written between single quotes like `'\n'`
+represents an integer value equal (10) to the numerical value of the character
+in the machine's character set, called an **character constant**. Just another
+way to write a small integer, so `'A'` is 65.
+
+A word is any sequence of characters that does not contain a blank, tab or
+newline. To count words :
+  * initialize a state variable to OUT
+  * increment a counter nw each time there is a non-blank character and state is
+    OUT. Set state to IN
+  * each time there is a blank character, set state to OUT
+
+We can initialize multiple variables at once with `nl = nw = nc = 0`.  In a long
+boolean expression, passive evaluation is applied so it stops to evaluate once
+it knows the final boolean value.
