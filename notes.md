@@ -141,3 +141,13 @@ newline. To count words :
 We can initialize multiple variables at once with `nl = nw = nc = 0`.  In a long
 boolean expression, passive evaluation is applied so it stops to evaluate once
 it knows the final boolean value.
+
+### 1.6 Arrays
+To declare an array : `int ndigit[10];`.
+
+We can use character constant to find if a character is a digit and its numeric
+value :
+```C
+if (c >= '0' && c <= '9')
+    ++ndigit[c-'0'];
+```
