@@ -1,0 +1,16 @@
+How would you test the word count program?
+
+  With unit tests :
+    * text with 10 words
+    * empty text
+    * text with only 1 long word (more than 50k chars)
+    * text with 66k words (same line, test buffer overflow of 16bit int)
+    * text with 66k words (1 per line, test buffer overflow of 16bit int)
+    * text with some empty/blank lines between some lines with words
+
+What kind of input are most likely to uncover bugs if there are any?
+
+  * empty text
+  * empty lines
+  * lot of words (check overflow of int16 int)
+  * text not empty but with only blank characters
