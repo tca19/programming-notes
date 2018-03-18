@@ -5,13 +5,12 @@
 int main()
 {
 	int count[MAX_LENGTH];
-	int c, i, length, in_word;
+	int c, i, length, in_word, nw;
 
 	for (i = 0; i < MAX_LENGTH; ++i)
 		count[i] = 0;
 
-	length = 0;
-	in_word = 0;
+	nw = length = in_word = 0;
 	while ((c = getchar()) != EOF)
 	{
 		if (c == ' ' || c == '\n' || c == '\t')
@@ -22,6 +21,7 @@ int main()
 					length = MAX_LENGTH;
 
 				++count[length-1];
+				++nw; /* count total number of words */
 				length = 0;
 				in_word = 0;
 			}
@@ -35,6 +35,9 @@ int main()
 
 	printf("Length | Count |\n");
 	printf("================\n");
+	if (nw == 0)
+		printf("No words found in input.\n");
+
 	for (i = 0; i < MAX_LENGTH; ++i)
 	{
 		if (count[i] > 0)
