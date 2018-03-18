@@ -151,3 +151,10 @@ value :
 if (c >= '0' && c <= '9')
     ++ndigit[c-'0'];
 ```
+
+### 1.7 Functions
+A function = equivalent to a subroutine, convenient way to encapsulate some
+computations which can be reused.
+
+> With properly designed functions, it is possible to ignore _how_ a job is
+> done; knowing _what_ is done is sufficient.
