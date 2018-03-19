@@ -180,3 +180,39 @@ definition
 * **argument** : value used in a call of the function
 * **function prototype** : to indicate what is the value returned by a function
   and the type of expected arguments (`int power(int base, int n);`)
+
+### 1.8 Arguments - Call by Value
+In C, all function arguments are passed by **value** (functions receive a local
+copy, not the original variable). So they can directly be used as a variable.
+The exceptions is with arrays : it is passed as a **reference**, not a copy (it
+is the adress of first cell of array). So a function can modify an array.
+
+### 1.9 Characters Arrays
+A function `getline()` needs to return a signal about possible EOF. We can set
+it to return the length of the line, or `0` if EOF is encountered (even a blank
+line has at least one `\n` character.
+
+We can declare empty `for` and `while` loop with a semi colon `;` :
+```C
+for (...)
+    ;
+
+while (...)
+    ;
+```
+
+Function that operates on arrays of characters :
+```C
+void copy(char to[], char from[])
+{
+    int i;
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
+}
+```
+
+`int` is the default return type, we can omit it in function declaration (like
+we did with only `main() {...}`. If a function does not return something that is
+reused, its type is `void`. In C, all arrays of characters (**string constant**)
+are terminated by the `\0` (_null character_) symbol.
