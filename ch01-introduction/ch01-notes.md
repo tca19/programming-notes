@@ -158,3 +158,25 @@ computations which can be reused.
 
 > With properly designed functions, it is possible to ignore _how_ a job is
 > done; knowing _what_ is done is sufficient.
+
+Function definitions are like :
+```C
+/*
+return-type function-name(parameter declaration, if any)
+{
+    declarations
+    statements
+}
+*/
+
+int power(int base, int n)
+{
+    /* ... */
+}
+```
+
+* **parameter** : variable named in the parenthesized list in a function
+definition
+* **argument** : value used in a call of the function
+* **function prototype** : to indicate what is the value returned by a function
+  and the type of expected arguments (`int power(int base, int n);`)
