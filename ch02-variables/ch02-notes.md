@@ -20,3 +20,9 @@ Can add the word `short` and `long` for `int`. `short` is at least 16 bits,
 `long` is at least 32 bits and `int` is either 16 or 32 bits.
 
 Can also specify `unsigned` (positive or zero) or `signed` for `int` and `char`.
+```C
+printf("%d") -> int/short/char
+printf("%u") -> unsigned int/unsigned short/unsigned char
+printf("%ld") -> long
+printf("%lu") -> unsigned long
+```
