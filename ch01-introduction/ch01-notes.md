@@ -216,3 +216,33 @@ void copy(char to[], char from[])
 we did with only `main() {...}`. If a function does not return something that is
 reused, its type is `void`. In C, all arrays of characters (**string constant**)
 are terminated by the `\0` (_null character_) symbol.
+
+### 1.10 External Variables and Scope
+Variables declared in one function are **private** : no other functions can
+access them. Local variables (_automatic variables_) in a function are created
+when the function is called but disappears when the function is exited.
+
+**External variables** are declared **once** outside functions and are globally
+accessible. Moreover, they retain their values when a function that uses them is
+exited.
+
+```C
+
+/* outside any functions (like a standard variable definition) */
+int max;
+char line[100];
+
+/* inside a function (add extern before definition) */
+extern int max;
+extern char line[];
+```
+Usually, external variables are defined at the beginning of the same file, so
+the`extern` declaration in function can be omitted. If a variable is used across
+several files, the external variable must be defined in a _header file_.
+
+For compatibility, functions with no arguments should have `void` as their
+argument.
+
+* **definition** : where variable is created or assigned storage
+* **declaration** : where the nature of the variable is stated but no storage is
+  allocated (like in a function argument list)
