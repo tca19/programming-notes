@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MAXLINE 10  /* maximum input line size */
+#define MAXLINE 80  /* maximum input line size */
 
 /* revised version of longest_line.c, print the length of arbitrarily long
  * input lines, and as much as possible of the text */
