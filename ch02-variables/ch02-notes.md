@@ -26,3 +26,16 @@ printf("%u") -> unsigned int/unsigned short/unsigned char
 printf("%ld") -> long
 printf("%lu") -> unsigned long
 ```
+
+### 2.3 Constants
+`long` constants are written with a terminal `l` or `L`. Unsigned contstants are
+written with a terminal `u` or `U` (`ul` or `UL` for `unsigned long`).
+
+Integers car be specified in **octal** (with a leading 0) and **hexadecimal**
+(with a leading 0x).
+
+**Character constants** are integer, written as a simple character (`'r'`). Its
+value is the numeric value of the character in the machine's character set. We
+can define character constant in :
+  * octal (`\O13` for vertical tab)
+  * hexedecimal (`\x7`)
