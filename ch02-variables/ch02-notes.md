@@ -62,3 +62,10 @@ int strlen(char s[])
 }
 ```
 
+**Enumeration constants** : a list of constant integer values like `enum boolean
+{NO, YES};` (alternative to `#define`). First name in an enumeration has value 0, the second one has value
+1 and so on. We can also specify the value of each element in an enumeration :
+```C
+enum escape {BELL = '\a', BACKSPACE = '\b', TAB = '\t',
+             NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
+```
