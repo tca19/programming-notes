@@ -69,3 +69,11 @@ int strlen(char s[])
 enum escape {BELL = '\a', BACKSPACE = '\b', TAB = '\t',
              NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
 ```
+
+### 2.4 Declarations
+A declaration specifies a type and contains a list of one or more variable of
+that type :
+```
+int lower, upper, step;
+char c, line[1000];
+```
