@@ -96,3 +96,16 @@ const double = 2.71828182845905;
 
 int strlen(const char[]);
 ```
+
+### 2.5 Arithmetic Operators
+They are `+, -, *, /, %`. We **cannot** apply `%` on **float and double**. `*, /
+,%` have higher precedence than `+, -`.
+
+### 2.6 Relational and Logical Operators
+**Relational operators** : `>, >=, <, <=`, all the same precedence. Also the `==`
+and `!=`.
+
+**Logical operators** : `&&` and `||`. Evaluation of an expresion stops when the
+output of evaluation is known (_passive evaluation_).
+
+It is better to use `if (!valid)` than `if (valid == 0)`.
