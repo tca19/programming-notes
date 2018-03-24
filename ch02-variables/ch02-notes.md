@@ -63,7 +63,8 @@ int strlen(char s[])
 ```
 
 **Enumeration constants** : a list of constant integer values like `enum boolean
-{NO, YES};` (alternative to `#define`). First name in an enumeration has value 0, the second one has value
+{NO, YES};` (alternative to `#define`). First name in an enumeration has value
+0, the second one has value
 1 and so on. We can also specify the value of each element in an enumeration :
 ```C
 enum escape {BELL = '\a', BACKSPACE = '\b', TAB = '\t',
@@ -76,4 +77,22 @@ that type :
 ```
 int lower, upper, step;
 char c, line[1000];
+```
+
+We can also initialize a variable in its declaration :
+```C
+int limit = MAXLINE-1;
+float eps = 1.0e-5;
+```
+
+Initializer must be a constant expression. External and static variables are
+**initialized to zero** by default.
+
+We can add the keyword `const` to specify that the variable value will not be
+modified (same thing goes with an array). We can also add `const` in a function
+argument list to indicate that an array will not be modified.
+```C
+const double = 2.71828182845905;
+
+int strlen(const char[]);
 ```
