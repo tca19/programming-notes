@@ -165,3 +165,45 @@ void srand(unsigned int seed)
     next = seed;
 }
 ```
+
+### 2.8 Increment and Decrement Operators
+With **prefix** (`++n`), n is incremented before its value is used). With
+**postfix** (`n++`) n is incremented after its value is used.
+Increment/Decrement operators can only be applied to variables (not on 3 for
+example).
+```C
+/* strcat: concatenate t to end of s; s must be big enough */
+void strcat(char s[], char t[])
+{
+    int i, j;
+
+    i = j = 0;
+    while (s[i] != '\0')               /* move to end of s */
+        ++i;
+    while ((s[i++] = t[j++]) != '\0')  /* copy t */
+        ;
+}
+```
+
+### Bitwise Operators
+Six operators for bit manipulations; only on integers (char, short, int, long).
+  * `&    (AND)`
+  * `|    (OR)`
+  * `^    (XOR)`
+  * `<<   (left shift)`
+  * `>>   (right shift)`
+  * `~    (one's complement)`
+
+`<< n` shift the bits to left by n positions, filling vacated bits with `0`.
+Right shifting **unsigned** integer always fill with vacated bits with `0` while
+it depends on the machine architecture for **signed** integers.
+
+`~` converts each 1 to 0 and each 0 to 1. So `~0` is all 1 bits.
+```C
+/* getbits: get n bits from position p */
+unsigned getbits(unsigned x, int p, int n)
+{
+    /* ~(~0 << n) is a mask of the rightmost n bits */
+    return (x >> (p+1-n)) & ~(~0 << n);
+}
+```
