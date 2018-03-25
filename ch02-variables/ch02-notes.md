@@ -102,10 +102,66 @@ They are `+, -, *, /, %`. We **cannot** apply `%` on **float and double**. `*, /
 ,%` have higher precedence than `+, -`.
 
 ### 2.6 Relational and Logical Operators
-**Relational operators** : `>, >=, <, <=`, all the same precedence. Also the `==`
-and `!=`.
+ * **Relational operators** : `>, >=, <, <=`, all the same precedence. Also the
+   `==` and `!=`.
 
-**Logical operators** : `&&` and `||`. Evaluation of an expresion stops when the
-output of evaluation is known (_passive evaluation_).
+ * **Logical operators** : `&&` and `||`. Evaluation of an expresion stops when
+   the output of evaluation is known (_passive evaluation_).
 
-It is better to use `if (!valid)` than `if (valid == 0)`.
+It is better to use `if (!valid)` than `if (valid == 0)`. The precedence of `!=`
+is higher than assignement, that's why we need parentheses in `(c = getchar())
+!= '\n'`.
+
+### 2.7 Type Conversions
+In `a+b`, if `a` and `b` are not of the same type, one of them is converted,
+usually the "narrower" becomes "wider" (like int to float) so no loss of
+information. Most of the time, `char` is used as an integer :
+```C
+/* atoi: converts s to integer */
+int atoi(char s[])
+{
+    int i, n;
+
+    for (n = 0, i = 0; s[i] >= '0' && s[0] <= '9'; ++i)
+        n = 10*n + (s[i]-'0'); /* implicit char to int conversion */
+
+    return n;
+}
+```
+Some conversion function are implemented in `<ctype.h>` :
+  * `tolower(c)`
+  * `isdigit(c)`
+
+**BE CAREFUL** : when converting a char with leftmost bit set to 1 to integer,
+it can becomes negative (depends on the architecture of the machine). It is
+better to indicate if such char is `signed` or `unsigned`.
+
+Floats are not automatically converted to double (but most of the functions in
+`<math.h>` use double). The main reason to use float is to save storage in large
+arrays, or save time in computations (less expensive than using double).
+
+Conversion rules :
+  * if either operand is `long double`, convert the other to `long double`
+  * if either operand is `double`, convert the other to `double`
+  * if either operand is `float`, convert the other to `float`
+  * convert `char` and `short` to `int`
+  * if either operand is `long`, convert the other to `long`
+
+We can force conversion with `(type) expression;` (cast). A cast does not change
+the value of the expression.
+```C
+unsigned long int next = 1;
+
+/* rand: return pseudo-random integer on 0..32767 */
+int rand(void)
+{
+    next = next * 1103515245 + 12345;
+    return (unsigned int)(next/65536) % 32768;
+}
+
+/* srand: set seed for rand() */
+void srand(unsigned int seed)
+{
+    next = seed;
+}
+```
