@@ -12,7 +12,7 @@ void print_as_binary(unsigned int x)
 {
 	int i;
 	char bits[MAX_BIT_SIZE+1];
-	printf("x: %d, bin(x): ", x);
+	printf("x: %u, bin(x): ", x);
 
 	for (i = MAX_BIT_SIZE-1; i > -1; --i)
 	{
