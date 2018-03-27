@@ -34,3 +34,26 @@ else
 ```
 Last `else` can also be omitted, but usually used to catch an _impossible_
 situation.
+
+### 3.4 Switch
+To test whether an expression matches a _constant integer value_ :
+```C
+switch (expression)
+{
+    case const-expr:
+        statements
+        break;
+    case const-expr:
+        statements
+        break;
+    case const-expr1: case const-expr2: case const-expr3:
+        statements
+        break;
+    default:
+        statements
+        break;
+}
+```
+All case expressions must be different. `default` is optional. You can regroup
+some case with the same statement. `break` exits the switch, otherwise the code
+would continue to check other const-expr (_fall through_).
