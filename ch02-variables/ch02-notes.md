@@ -258,9 +258,9 @@ high-priority) :
   * `||`
   * `?:`
   * `= += -= (all other assignment operators)`
-  * ,
+  * `,`
 
 In the expression `x = f() + g()`, the order of evaluation is not defined.
-Sometimes f() is executed first, sometimes it's g(), so **be careful** if one of
-them modify a variable also used by the other. We can store intermediate result
-in a _temporary variable_ to ensure the order.
+Sometimes `f()` is executed first, sometimes it's `g()`, so **be careful** if
+one of them modify a variable also used by the other. We can store intermediate
+result in a _temporary variable_ to ensure the order.
