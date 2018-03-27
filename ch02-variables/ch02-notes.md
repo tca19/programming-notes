@@ -185,7 +185,7 @@ void strcat(char s[], char t[])
 }
 ```
 
-### Bitwise Operators
+### 2.9 Bitwise Operators
 Six operators for bit manipulations; only on integers (char, short, int, long).
   * `&    (AND)`
   * `|    (OR)`
@@ -207,3 +207,60 @@ unsigned getbits(unsigned x, int p, int n)
     return (x >> (p+1-n)) & ~(~0 << n);
 }
 ```
+
+### 2.10 Assignment Operators and Expressions
+**Assignment operators** : like `+=`, `-=`, `|=`... The statement `x *= y + 1`
+is equivalent to `x = x * (y + 1)`. (_preferable for conciseness and
+readability_).
+```C
+/* bitcount: count 1 bits in x */
+int bitcount(unsigned int x)
+{
+    int b;
+
+    for (b = 0; x > 0; x >>= 1)
+        if (x & 01)
+            ++b;
+    return b;
+}
+```
+In code above, we indicate that x is **unsigned** so when it is right shifted,
+vacated bits are filled with `0`, not sign bits. In two's complement number
+system, `x &= (x-1)` **deletes the rightmost 1-bit** in x.
+
+### 2.11 Conditional Expressions
+Using the **ternary operator** `?:` (expr1) ? expr2 : expr3. If expr1 is true,
+then expr2 is evaluated, otherwise expr3 is evaluated.
+```C
+z = (a > b) ? a : b;   /* z = max(a, b) */
+
+/* print an array, 10 elements by line, each colum separated by a blank */
+for (i = 0; i < n; ++i)
+    printf("%6d%c", a[i], (i%10 == 9 | i==n-1) ? '\n' : ' ');
+
+printf("You have %d items%s.\n", n, n==1 ? "" : "s");
+```
+
+### 2.12 Precedence and Order of Evaluation
+Operators precedence in decreasing order (the ones at the top have
+high-priority) :
+  * `() [] -> .`
+  * `! - ++ -- + - * & sizeof`
+  * `* / %`
+  * `+ -`
+  * `<< >>`
+  * `< <= > >=`
+  * `== !=`
+  * `&`
+  * `^`
+  * `|`
+  * `&&`
+  * `||`
+  * `?:`
+  * `= += -= (all other assignment operators)`
+  * ,
+
+In the expression `x = f() + g()`, the order of evaluation is not defined.
+Sometimes f() is executed first, sometimes it's g(), so **be careful** if one of
+them modify a variable also used by the other. We can store intermediate result
+in a _temporary variable_ to ensure the order.
