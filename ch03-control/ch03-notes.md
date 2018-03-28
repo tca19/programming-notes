@@ -119,3 +119,35 @@ void itoa(int n, char s[])
     reverse(s);
 }
 ```
+
+### 3.7 Break and Continue
+The `break` statement causes the **innermost** enclosing loop or `switch` to be
+exited immediately.
+```C
+/* trim: remove trailing blanks, tabs, newlines */
+int trim(char s[])
+{
+    int n;
+
+    for (n = strlen(s)-1; n >= 0; n--)
+        if (s[n] != ' ' && s[n] != '\t' && s[n] != '\n')
+            break;
+    s[n+1] = '\0';
+    return n;
+}
+```
+The `continue` statement causes the next iteration of the loop to begin (or go
+to the increment step in the `for` loop).
+
+### 3.8 Goto and Labels
+Most common usage is to exit more than 2 nested loops. Should be **rarely**
+used.
+```C
+for (i = 0; i < n; ++i)
+    for (j = 0; j < m; ++j)
+        if (a[i] == b[i])
+            goto found;
+/* didn't find any common element */
+...
+found:   /* <- a label, same as a variable but colon (:) at the end */
+    /* got one: a[i] == b[j] */
