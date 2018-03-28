@@ -57,3 +57,65 @@ switch (expression)
 All case expressions must be different. `default` is optional. You can regroup
 some case with the same statement. `break` exits the switch, otherwise the code
 would continue to check other const-expr (_fall through_).
+
+### 3.5 Loops - While and For
+In `while (expr) {...}`, block is executed until `expr` becomes `0`. The
+`for(expr1; expr2; expr3)` loop is just a `while` loop formatted :
+```C
+expr1;
+while (expr2)
+{
+    statements;
+    expr3;
+}
+```
+`for (;;)` is an **infinite** loop. `for` loop is preferable when there is an
+initialization and an increment step.
+
+From `<ctype.h>`, there are the functions `isspace()` and `isdigit()`.
+
+We can place multiple expression in the same part of a `for` loop :
+```C
+#include <string.h>
+
+/* reverse: reverse string s in place */
+void reverse(char s[])
+{
+    int c, i, j;
+
+    fot (i = 0, j = strlen(s)-1; i < j; i++, j--)
+    {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+
+        /* or with a single statement */
+        /*c = s[i], s[i] = s[j], s[j] = c;*/
+    }
+}
+```
+
+### 3.6 Loops - Do-While
+In a `do-while` loop, the termination condition is tested **after** the loop
+body (not before like the other two loops) -> _the body is always executed at
+least once_.
+```C
+/* itoa: convert n to characters in s */
+void itoa(int n, char s[])
+{
+    int i, sign;
+
+    if ((sign = n) < 0) /* record sign */
+        n = -n;         /* make n positive */
+    i = 0;
+    do
+    {           /* generate digits in reverse order */
+        s[i++] = n % 10 + '0';   /* get next digit */
+    } while (( n /= 10) > 0);    /* delete it */
+
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s);
+}
+```
