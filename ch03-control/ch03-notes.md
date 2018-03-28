@@ -7,11 +7,12 @@ Chapter 3 : Control Flow
 ### 3.1 Statements and Blocks
 **Statement** : expression followed by a semi-colon, like `x = 0;`. `;` is a
 _statement terminator_.
+
 **Block (or compound statement)** : grouped statements with `{ }` like function
 body of if-else.
 
 ### 3.2 If-Else
-Else part is _optionnal_ but sometimes can be ambiguous :
+`else` part is _optionnal_ but sometimes can be ambiguous without it :
 ```C
 if (n > 0)
     if (a > b)
@@ -54,9 +55,9 @@ switch (expression)
         break;
 }
 ```
-All case expressions must be different. `default` is optional. You can regroup
-some case with the same statement. `break` exits the switch, otherwise the code
-would continue to check other const-expr (_fall through_).
+All `case` expressions must be different. `default` is optional. You can regroup
+several `case` with the same statement. `break` exits the switch, otherwise the
+code would continue to check other const-expr (_fall through_).
 
 ### 3.5 Loops - While and For
 In `while (expr) {...}`, block is executed until `expr` becomes `0`. The
@@ -74,7 +75,8 @@ initialization and an increment step.
 
 From `<ctype.h>`, there are the functions `isspace()` and `isdigit()`.
 
-We can place multiple expression in the same part of a `for` loop :
+We can place multiple expressions in the same part of a `for` loop with the `,`
+operator :
 ```C
 #include <string.h>
 
@@ -97,8 +99,8 @@ void reverse(char s[])
 
 ### 3.6 Loops - Do-While
 In a `do-while` loop, the termination condition is tested **after** the loop
-body (not before like the other two loops) -> _the body is always executed at
-least once_.
+body (not **before** like the other two loops) -> _therefor, the body is always
+executed at least once_.
 ```C
 /* itoa: convert n to characters in s */
 void itoa(int n, char s[])
