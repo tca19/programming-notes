@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+/* reverse: reverse in place the string s */
 void reverse(char s[])
 {
 	int len, i, j, temp;
@@ -12,6 +13,7 @@ void reverse(char s[])
 		temp = s[i], s[i] = s[j], s[j] = temp;
 }
 
+/* itob: converts n into the base `base` character representation */
 int itob(int n, char s[], int base)
 {
 	int sign, i, d;
