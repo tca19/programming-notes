@@ -123,3 +123,28 @@ int getch(void);
 void ungetch(int);
 ```
 Then in each `.c` file, we add the line `#include "calc.h"`.
+
+### 4.6 Static Variables
+The prefix `static` added to an external variable or function limits its scope to
+the rest of that source file.
+```C
+/* no functions in other files will be able to access these variables */
+static char buf[BUFSIZE];
+static int bufp = 0;
+```
+
+Normally, function names are **global**, visible to any part of the entire
+program.  If we add `static` in front of a function name, it **becomes invisible
+outside the file** in which it is declared.
+
+If a variable inside a function is declared `static`, it remains in existence
+between each call. So they provide a **private, permanent storage** inside a
+function.
+
+### 4.7 Register Variables
+`register int x;` : indicate to the compiler that the variable will be used a
+lot so it might be a good idea to put it in register. Compilers can ignore this
+indication. Can only be used on _automatic variables_ and _formal parameters of
+a function_ (`f(register unsigned x, register char n)`.
+
+It is **not possible to take the address of a register** variable.
