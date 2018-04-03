@@ -83,3 +83,43 @@ void ungetch(int c) /* push character back on input */
         buf[bufp++] = c;
 }
 ```
+
+### 4.4 Scope Rules
+External variables and functions of a C program are not all compiled at the same
+time : some are in different files, some are precompiled in libraries.
+
+* **Scope** of a name : part of a program within the name can be used.
+  Parameters of a function are local variables and can only be used in this
+  function.
+* Scope of an external variable : from where it is declared to the end of the
+  file compiled. In the calculator program, _sp_ and _val_ were accessible to
+  `pop()` and `push()` but not to `main()` because they were defined
+  **AFTER**.
+
+The line `int sp;` is a **definition** (storage is set aside) but `extern int
+sp;` is a **declaration** (only announces the properties of _sp_, do not create
+the variable or reserve storage for it). No need to indicate array size in
+extern declaration (`extern double val[];`).
+
+**Only ONE definition of an external variable among all the files of the
+program.**
+
+### 4.5 Header Files
+If we want to separate our reverse polish calculator into several files, we
+would create :
+* `main.c`
+* `stack.c` (for push, pop and their variables)
+* `getop.c`
+* `getch.c` (most likely to come from a library)
+
+We need to _centralize_ all declarations and definitions (easier to manage).
+Usually we place this into a **header** file; here `calc.h` :
+```C
+#define NUMBER '0'
+void push(double);
+double pop(void);
+int getop(char []);
+int getch(void);
+void ungetch(int);
+```
+Then in each `.c` file, we add the line `#include "calc.h"`.
