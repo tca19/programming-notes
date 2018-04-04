@@ -186,3 +186,24 @@ We can directly initialize char arrays with a string :
 char pattern = "ould";
 /* equivalent to char pattern = { 'o', 'u', 'l', 'd', '\0' }; */
 ```
+
+### 4.10 Recursion
+**Recursion** : when a function calls itself.
+```C
+#include <stdio.h>
+
+/* printd: print n in decimal. Start by printing leading digits */
+void printd(int n)
+{
+    if (n < 0)
+    {
+        putchar('-');
+        n = -n;
+    }
+    if (n / 10)
+        printd(n / 10);
+    putchar(n % 10 + '0');
+}
+```
+Another common recursion example is `quicksort(int [], int, int)` (choose pivot,
+create subarrays of elements less/greater than pivot, sort these subarrays).
