@@ -148,3 +148,41 @@ indication. Can only be used on _automatic variables_ and _formal parameters of
 a function_ (`f(register unsigned x, register char n)`.
 
 It is **not possible to take the address of a register** variable.
+
+### 4.8 Block Structure
+We can declare variables inside the block of a compound statement. In this case,
+the scope of these variables is that block (they remain in existence until the
+final `}` of the block).
+
+Variables declared inside a block **hide** external variables which have the
+same name.
+```C
+int x;
+int y;
+
+f(double x)
+{
+    double y;
+
+    /* any reference to x or y is a double, not an int */
+    ...
+}
+```
+
+### 4.9 Initialization
+Without explicit initialization, **external and static** variables are
+**guaranteed to be initialized to 0**. Automatic and register variables have
+_undefined_ initial values. We can initialize when we define variables : `long
+day = 1000L * 60L * 60L * 24L;`.
+
+External and static variables **must** be initialized with _constant
+expression_.
+
+When initializing an array (`int ar[10] = {1, 2, 3}`), if there are fewer
+initializers than the specified size, missing values are set to `0`.
+
+We can directly initialize char arrays with a string :
+```C
+char pattern = "ould";
+/* equivalent to char pattern = { 'o', 'u', 'l', 'd', '\0' }; */
+```
