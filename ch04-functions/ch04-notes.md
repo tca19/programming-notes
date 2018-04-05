@@ -207,3 +207,30 @@ void printd(int n)
 ```
 Another common recursion example is `quicksort(int [], int, int)` (choose pivot,
 create subarrays of elements less/greater than pivot, sort these subarrays).
+
+### 4.11 The C Preprocessor
+Two main commands :
+1. `#include`
+
+   Any line like `#include "filename"` or `#include <filename>` is replaced by
+   the content of the file _filename_. Usually we use `"..."` to  search for
+   files in the same working directory. When an included file is changed, it
+   needs to be recompiled.
+
+2. `#define` (called _Macro Substitution_)
+
+   `#define name replacement-text` : each occurrence of _name_ token will be
+   replaced by _replacement-text_. _replacement-text_ can be written on several
+   lines with `\` at the end of each line. Replacement **does not take place in
+   quoted strings**.
+
+   `#define max(A, B) ((A) > (B) ? (A) : (B))` : use arguments in macros. No
+   data type restriction (works for any data type in A and B). Most of the
+   functions in `<stdio.h>` or `<ctype.h>` are implemented as macros, to avoid
+   the run-time overhead of a function call.
+
+   A parameter name in the replacement text preceded by `#` is expanded into a
+   quoted string with the parameter replaced by the actual argument.
+   ```C
+   #define dprint(expr) printf(#expr " = %d\n", expr)
+   ```
