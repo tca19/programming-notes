@@ -57,6 +57,51 @@ int strlen(char *s)
     return n;
 }
 ```
-In function arguments, `char *s` is prefered to `char s[]` (more explicit that it
-is a pointer) but both are **equivalent**. A function can operate on _subarray_
-(`f(&a[2])`). `p[-1]`, `p[-2]` are valid if the elements before `p[0]` exist.
+In function arguments, `char *s` is prefered to `char s[]` (more explicit that
+it is a pointer) but both are **equivalent**. A function can operate on
+_subarray_ (`f(&a[2])`). `p[-1]`, `p[-2]` are valid if the elements before
+`p[0]` exist.
+
+### 5.4 Address Arithmetic
+To implement a basic storage allocator, two variables are required :
+* `allocbuf` : large character array
+* `allocp` : position of the next free position in `allocbuf`
+
+```C
+#define ALLOCSIZE 10000 /* size of available space */
+
+static char allocbuf[ALLOCSIZE];  /* storage for alloc */
+static char *allocp = allocbuf;   /* next free position */
+
+char *alloc(int n)  /* return pointer to n characters */
+{
+    if (allocbuf + ALLOCSIZE - allocp >= n) /* if fits */
+    {
+        allocp += n;
+        return allocp - n; /* old position */
+    }
+    else                   /* not enough space */
+        return 0;
+}
+
+void afree(char *p) /* free storage pointed to by p */
+{
+    if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
+        allocp = p;
+}
+```
+The function `alloc()` returns `0` to indicate there is no space left because
+**`0` is never a valid address**. The symbolic constant `NULL` is used to
+indicate the zero pointer. The subtraction between two pointers gives the number
+of cells between them (when they point to the same array).
+```C
+/* strlen: return length of string s */
+int strlen(char *s)
+{
+    char *p = s;
+
+    while (*p != '\0')
+        ++p;
+    return p - s;
+}
+```
