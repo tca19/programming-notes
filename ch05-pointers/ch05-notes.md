@@ -105,3 +105,25 @@ int strlen(char *s)
     return p - s;
 }
 ```
+
+### 5.5 Character Pointers and Functions
+_String constant_ : words or sentence between double quotes `"`, is an _array of
+characters_. Always implicitly terminated by `\0` (null character). Accessed by
+a **pointer to its first element**.
+
+In the code below; `amessage` is an array so we can modify each character.
+`apointer` is a pointer (that can points to something else) but result is
+undefined if we try to modify the string pointed to. Most of the function that
+operate on strings (including `strcpy` and `strcmp` are in `<string.h>`.
+```C
+char amessage[] = "now is the time"; /* an array */
+char *pmessage = "now is the time";  /* a pointer */
+```
+Another implementation of `strcpy()`:
+```C
+void strcpy(char *s, char *t)
+{
+    while (*t++ = *s++)
+        ;
+}
+```
