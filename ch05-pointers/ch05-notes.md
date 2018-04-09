@@ -127,3 +127,13 @@ void strcpy(char *s, char *t)
         ;
 }
 ```
+
+### 5.6 Pointer Arrays; Pointers to Pointers
+Pointers are **variables** that can also be stored in arrays. To sort multiple
+lines, first store them in a long continuous character array, then represent the
+lines by an arry of pointers to these strings and sort the pointers instead of
+the lines (no need to operate or move the lines).
+
+`char *lineptr[MAXLINES];` is an **array of MAXLINES** element, each one is a
+**pointer to a char**. `lineptr[i]` is a pointer and `*lineptr[i]` is a string
+constant.
