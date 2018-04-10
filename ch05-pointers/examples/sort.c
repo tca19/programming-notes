@@ -7,7 +7,6 @@ char *lineptr[MAXLINES];      /* pointers to text lines */
 
 int readlines(char *lineptr[], int maxlines);
 void writelines(char *lineptr[], int maxlines);
-
 void qsort(char *lineptr[], int left, int right);
 
 /* sort input lines */
@@ -24,8 +23,10 @@ int main()
 	else
 	{
 		printf("error: input too big to sort\n");
-		return -1:
+		return -1;
 	}
+
+	return 0;
 }
 
 #define MAXLEN 1000     /* max length of any input line */
@@ -39,14 +40,14 @@ int readlines(char *lineptr[], int maxlines)
 	char *p, line[MAXLEN];
 
 	nlines = 0;
-	while ((len = getline(line, MAXLEN)) >= 0)
-		if (nlines >= maxlines || (a = alloc(len)) == NULL)
+	while ((len = getline(line, MAXLEN)) > 0)
+		if (nlines >= maxlines || (p = alloc(len)) == NULL)
 			return -1;
 		else
 		{
 			line[len-1] = '\0'; /* delete newline */
 			strcpy(p, line);
-			lineptr(nlines++] = p;
+			lineptr[nlines++] = p;
 		}
 	return nlines;
 }
@@ -57,6 +58,13 @@ void writelines(char *lineptr[], int nlines)
 	int i;
 	for (i = 0; i < nlines; ++i)
 		printf("%s\n", lineptr[i]);
+}
+
+/* writelines: write output lines; pointer version */
+void writelines_p(char *lineptr[], int nlines)
+{
+	while (nlines-- > 0)
+		printf("%s\n", *lineptr++);
 }
 
 /* qsort: sort v[left]...v[right] into increasing order */
@@ -85,4 +93,42 @@ void swap(char *v[], int i, int j)
 	temp = v[i];
 	v[i] = v[j];
 	v[j] = temp;
+}
+
+#define ALLOCSIZE 10000 /* size of available space */
+
+static char allocbuf[ALLOCSIZE];  /* storage for alloc */
+static char *allocp = allocbuf;   /* next free position */
+
+char *alloc(int n)  /* return pointer to n characters */
+{
+    if (allocbuf + ALLOCSIZE - allocp >= n) /* if fits */
+    {
+        allocp += n;
+        return allocp - n; /* old position */
+    }
+    else                   /* not enough space */
+        return 0;
+}
+
+void afree(char *p) /* free storage pointed to by p */
+{
+    if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
+        allocp = p;
+}
+
+/* getline: read a line into s, return length */
+int getline(char *s, int lim)
+{
+	int c, i;
+
+	for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; ++i)
+		s[i] = c;
+	if (c == '\n')
+	{
+		s[i] = c;
+		++i;
+	}
+	s[i] = '\0';
+	return i;
 }
