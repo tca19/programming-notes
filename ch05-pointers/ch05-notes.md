@@ -137,3 +137,44 @@ pointers instead of the lines (no need to operate or move the lines).
 `char *lineptr[MAXLINES];` is an **array of MAXLINES** elements, each one is a
 **pointer to a char**. `lineptr[i]` is a pointer and `*lineptr[i]` is a string
 constant.
+
+### 5.7 Multi-dimensional Arrays
+To get multiple values from a function, we pass pointers to the list of
+arguments (`month_day(1988, 60, &m, &d)`.
+```C
+static char daytab[2][13] = {
+    {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+    {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+};
+
+/* day_of_year: set day of year from month & day */
+int day_of_year(int year, int month, int day)
+{
+    int i, leap;
+
+    leap = year%4 == 0 && year%100 != 0 || year%400 == 0;
+    for (i = 1; i < month; ++i)
+        day += daytab[leap][i];
+    return day;
+}
+
+/* month_day: set month, day from day of year */
+void month_day(int year, int yearday, int *pmonth, int *pday)
+{
+    int i, leap;
+
+    leap = year%4 == 0 && year%100 != 0 || year%400 == 0;
+    for (i = 0; yearday > daytab[leap][i]; ++i)
+        yearday -= daytab[leap][i];
+    *pmonth = i;
+    *pday = yearday;
+}
+```
+true (1) or false (0) can be used as an array index. `daytab` is made of `char`
+because the integers are small.
+
+When passed to a function, **2D arrays declaration must include number of
+columns**, number of rows is irrelevant. These declarations are valid :
+* `f(int daytab[2][13]) { ... }`
+* `f(int daytab[][13]) { ... }`
+* `f(int (*daytab)[13]) { ... }`
