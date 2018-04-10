@@ -178,3 +178,33 @@ columns**, number of rows is irrelevant. These declarations are valid :
 * `f(int daytab[2][13]) { ... }`
 * `f(int daytab[][13]) { ... }`
 * `f(int (*daytab)[13]) { ... }`
+
+### 5.8 Initialization of Pointer Arrays
+```C
+/* month_name: return name of the n-th month */
+char month_name(int n)
+{
+    static char *name[] = {
+        "Illegal month",
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    };
+
+    return (n < 1 && n > 12) ? name[0] : name[n];
+}
+```
+`name` is a array of pointers to `char`. Strings are stored somewhere and a
+pointer to each string is placed in `name[i]`.
+
+### 5.9 Pointers vs Multi-dimensional Arrays
+* `int a[10][20];` : a _true_ 2D array, composed of 200 integers. Memory has
+  been set aside.
+* `int *b[10];` : only allocates memory to store 10 pointers. Pointers are not
+  initialized. The rows of the array may be of different size (first is 10
+  integers, second is 3, third is 45...).
+
+Most common use case happens with string. In `char aname[][15] = {...}`, all
+rows are 15 characters long, even if some of them are smaller than 15 characters
+(so there is **wasted memory**). With `char *name[] = {...}`, each row has the
+right amount of characters.
