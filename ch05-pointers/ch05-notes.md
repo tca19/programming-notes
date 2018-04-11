@@ -267,3 +267,14 @@ v[left]) < 0`. `*comp` **IS the function**.
 
 Without parentheses, `int *comp(void *, void *)` indicates that `comp` is a
 function that returns a pointer to an `int`.
+
+### 5.12 Complicated Declarations
+* `int *f()`: f is a function returning pointer to int
+* `int (*pf)()`: pf is a pointer to a function returning int
+* `char **argv`: pointer to pointer to char
+* `int (*daytab)[13]`: pointer to array[13] of int
+* `int *daytab[13]`: array[13] of pointer to int
+* `void *comp()`: function returning pointer to void
+* `void (*comp)(): pointer to function returning void
+
+
