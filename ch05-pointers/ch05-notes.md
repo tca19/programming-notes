@@ -237,3 +237,33 @@ none. CLI flags (like `-x` or `-n`) can be in any order or combined (`-xn`).
   that argument
 * `*++(argv[0])` : iterates over the characters of `argv[0]` (by going to
   `argv[1]` then `argv[2]`...)
+
+### 5.11 Pointers to Functions
+Functions are not variables, it is possible to define pointers to functions,
+store these pointers in arrays or pass function pointers to other functions.
+
+A sort requires 3 parts :
+1. a comparison that determines order
+2. an exchange operation to swap two elements
+3. a sorting algorithm.
+
+The sorting algorithm is independent of the comparison/exchange operations. So
+passing the comparison function as an argument can change the behavior of the
+sort. When passing a function as an argument, no need of the `&` operator (same
+as an array name).
+
+`void *` is a generic pointer to tell that a function can receive **any
+types** of pointers. Casting a pointer to `void *` then back to its original
+type do not occur in loss of information. So pointers are casted to `void *`
+before being passed to `qsort`.
+
+```C
+void qsort(void *v[], int left, int right,
+           int (*comp)(void *, void *)) {...}
+```
+Last argument of `qsort()` : `comp` is a pointer to a function that has two
+`void*` arguments and returns and int. Then `comp` is used with `(*comp)(v[i],
+v[left]) < 0`. `*comp` **IS the function**.
+
+Without parentheses, `int *comp(void *, void *)` indicates that `comp` is a
+function that returns a pointer to an `int`.
