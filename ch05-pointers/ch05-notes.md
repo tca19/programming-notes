@@ -201,10 +201,39 @@ pointer to each string is placed in `name[i]`.
 * `int a[10][20];` : a _true_ 2D array, composed of 200 integers. Memory has
   been set aside.
 * `int *b[10];` : only allocates memory to store 10 pointers. Pointers are not
-  initialized. The rows of the array may be of different size (first is 10
+  initialized. The rows of the array may be of different sizes (first is 10
   integers, second is 3, third is 45...).
 
 Most common use case happens with string. In `char aname[][15] = {...}`, all
 rows are 15 characters long, even if some of them are smaller than 15 characters
 (so there is **wasted memory**). With `char *name[] = {...}`, each row has the
 right amount of characters.
+
+### 5.10 Command-line Arguments
+When `main` is called, it receives two arguments :
+* `argc` : (argument _count_), number of CLI args
+* `argv` : (argument _vector_), pointer to an array of character strings, each
+  one is a CLI arg
+
+`argv[0]` is the name of the program, `argc` is always >= 1. `argv[argc]` is
+`NULL` pointer. `*++argv` first moves `argv` to next position (because position
+0 is the name of the program) then dereference it.
+```C
+#include <stdio.h>
+
+/* echo command-line arguments; pointer version */
+int main(int argc, char *argv[])
+{
+    while (--argc > 0)
+        printf((argc > 1) ? "%s " : "%s", *++argv);
+    printf("\n");
+    return 0;
+}
+```
+`strstr(s, t)` returns a pointer to the first occurrence of t in s, `NULL` if
+none. CLI flags (like `-x` or `-n`) can be in any order or combined (`-xn`).
+
+* `(*++argv)[0]` : move `argv` to next arg pointer, then take first char of
+  that argument
+* `*++(argv[0])` : iterates over the characters of `argv[0]` (by going to
+  `argv[1]` then `argv[2]`...)
