@@ -276,5 +276,3 @@ function that returns a pointer to an `int`.
 * `int *daytab[13]`: array[13] of pointer to int
 * `void *comp()`: function returning pointer to void
 * `void (*comp)(): pointer to function returning void
-
-
