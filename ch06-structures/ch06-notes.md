@@ -15,7 +15,22 @@ struct point
     int x; /* list of declarations */
     int y;
 };
+
+struct point pt;             /* not initialized */
+struct point M = {300, 100}; /* initialized */
 ```
 `point` is the **structure tag**. Variables named in a structure are called
-**members**.
+**members** and are accessible with the `.` operator : `printf("%d %d\n", M.x,
+M.y);`.
 
+A `struct` declaration defines **a type** so a list of variable can follow `}`
+like `struct P {...} x, y, z;`. The variables are of type `struct P`.
+
+`struct` declaration can use other `struct` as members :
+```C
+struct rectangle
+{
+    struct point p1;
+    struct point p2;
+};
+```
