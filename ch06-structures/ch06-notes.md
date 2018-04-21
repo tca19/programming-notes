@@ -70,3 +70,24 @@ accessed with `(*pp).x` and `(*pp).y`. Parentheses are _necessary_ because `.`
 has higher precedence than `*` (so it would be interpreted as `*(pp.x)`).
 
 Shorthand notation : `pp->x` and `pp->y`.
+
+### 6.3 Arrays of Structures
+Declare a structure, define an array of this structure (memory is set aside) :
+```C
+struct key {
+    char *word;
+    int count;
+} keytab[NKEYS];
+```
+Struct array can be also be initialized when defined :
+```C
+struct key {
+    char *word;
+    int count;
+} keytab[] = {
+    "auto", 0,  /* braces are not necessary in {"auto", 0}, ... */
+    "break", 0,
+    /* ... */
+    "while", 0
+};
+```
