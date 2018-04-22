@@ -91,3 +91,15 @@ struct key {
     "while", 0
 };
 ```
+
+Size of an array is _known at compile time_. The number of elements in keytab is
+**size of keytab / size of struct key**, which can be computed with :
+* `sizeof object` : object is variable or array or structure
+* `sizeof(type-name)` : type-name is basic type or structure or pointer
+
+So number of elements is :
+```C
+/* the latter also works if the type of keytab change */
+#define NKEYS (sizeof keytab / sizeof(struct key))
+#define NKEYS (sizeof keytab / sizeof keytab[0])
+```
