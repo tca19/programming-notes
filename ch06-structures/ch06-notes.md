@@ -103,3 +103,19 @@ So number of elements is :
 #define NKEYS (sizeof keytab / sizeof(struct key))
 #define NKEYS (sizeof keytab / sizeof keytab[0])
 ```
+
+### 6.4 Pointers to Structures
+`struct key *binsearch()` : a function returning a pointer to a `key` structure.
+
+If two pointers represent both sides of a subarray, middle element is accessed
+with :
+```C
+struct key *low  = &tab[0];
+struct key *high = &tab[n];
+struct key *mid  = low + (high-low) / 2;
+```
+
+**Don't assume that the size of a structure is the sum of the sizes of its
+members**. A struct composed of a `char` (1 byte) and an `long` (8 bytes) might
+require 16 bytes instead of 9 (because of data alignment). `sizeof` always
+return proper size of a structure.
