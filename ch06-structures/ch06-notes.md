@@ -119,3 +119,23 @@ struct key *mid  = low + (high-low) / 2;
 members**. A struct composed of a `char` (1 byte) and an `long` (8 bytes) might
 require 16 bytes instead of 9 (because of data alignment). `sizeof` always
 return proper size of a structure.
+
+### 6.5 Self-referential Structures
+A structure **can't contain an instance of itself**, but it can contain a
+pointer to the same type of structure.
+```C
+struct tnode              /* the tree node: */
+{
+    char *word;            /* points to the text */
+    int count;             /* number of occurrences */
+    struct tnode *lchild;  /* left child */
+    struct tnode *rchild;  /* right child */
+};
+```
+
+Two structures can refer to each other : `struct t { ...; struct s *p; };` and
+`struct s { ...; struct t *q; };`.
+
+Some machines require _data alignment_ (for example, integers must at even
+addresses). The `alloc()` of chapter 5 does not cope with data alignment;
+`malloc()` does. It also return a `void*` pointer that needs to be casted.
