@@ -139,3 +139,22 @@ Two structures can refer to each other : `struct t { ...; struct s *p; };` and
 Some machines require _data alignment_ (for example, integers must at even
 addresses). The `alloc()` of chapter 5 does not cope with data alignment;
 `malloc()` does. It also return a `void*` pointer that needs to be casted.
+
+### 6.6 Table Lookup
+The macro processor or compiler routines usually have a hash table to manage
+symbols. For the line `#define IN 1`, the table will store the name `IN` and the
+replacement text `1` (both as string). Then it parses the program and calls
+`lookup("IN")` to know the replacement text everytime it encounters `IN`.
+
+A hash table is an array of pointers to structure like :
+```C
+struct nlist
+{
+    struct nlist *next; /* linked list, need to know next element */
+    char *name;
+    char *defn;
+};
+static struct nlist *hashtab[HASHSIZE];
+```
+
+To navigate a linked list : `for (ptr = head; ptr != NULL; ptr = ptr->next)`
