@@ -184,3 +184,20 @@ typedef struct tnode
 
 `typedef` declarations **does not create a new type** : it adds a name for an
 existing type (like `#define` but interpreted by compiler).
+
+### 6.8 Unions
+Union : a variable that can hold objects of different types and sizes.
+```C
+union u_tag
+{
+    int ival;
+    float fval;
+    char *sval;
+} u;
+```
+
+Variable `u` will be large enough to store the largest of its data types.
+Members are accessed with `.` or `->` (for union pointer), like for `struct`.
+
+Unions can be found inside `struct` or arrays. It can **only be initialized with
+a value of its first member** (`int` in this case).
