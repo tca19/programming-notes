@@ -158,3 +158,29 @@ static struct nlist *hashtab[HASHSIZE];
 ```
 
 To navigate a linked list : `for (ptr = head; ptr != NULL; ptr = ptr->next)`
+
+### 6.7 Typedef
+Allows to create new data type **names** :
+```C
+typedef int Length; /* makes the name Length a synonym for int */
+Length *lengths[];
+
+typedef char *String; /* String is now a synonym for char* */
+p = (String) malloc(100);
+
+/* syntax: typedef <type> <typedef-name>. type can be basic type (int, char) or
+struct */
+
+typedef struct tnode *Treeptr;
+
+typedef struct tnode
+{
+    char *word;
+    int count;
+    Treeptr left;
+    Treeptr right;
+} Treenode;
+```
+
+`typedef` declarations **does not create a new type** : it adds a name for an
+existing type (like `#define` but interpreted by compiler).
