@@ -201,3 +201,31 @@ Members are accessed with `.` or `->` (for union pointer), like for `struct`.
 
 Unions can be found inside `struct` or arrays. It can **only be initialized with
 a value of its first member** (`int` in this case).
+
+### 6.9 Bit-fields
+To store some flags, one can use integers with only one bit set to 1 and do some
+bitwise operation, like :
+```C
+#define KEYWORD  01
+#define EXTERNAL 02
+#define STATIC   04
+
+if ((flags & (EXTERNAL | STATIC)) == 0) {...}
+```
+
+A more space efficient way is to store all the flags in one integers (4 bytes),
+1 flag per bit (so 32 possible flags) :
+```C
+struct
+{
+    unsigned int is_keyword : 1; /* 1 is the field widths in bits */
+    unsigned int is_extern  : 1;
+    unsigned int is_static  : 1;
+} flags;
+
+/* initialization */
+flags.is_extern = 1; flags.is_static = 0;
+
+/* use */
+if (flags.is_extern == 0 && flags.is_static == 0) {...}
+```
