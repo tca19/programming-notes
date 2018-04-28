@@ -33,3 +33,7 @@ Printing "hello, world" (12 char) :
 * `%.10s     ->  "hello, wor" (at most 10 char printed = precision)
 * `-15.10%s  ->  "hello, wor     " (left align because of "-", at least 15 char
   wide, at most 10 char from string printed)
+
+`int sprintf(char *string, char *format, arg1, arg2, ...)` : format arguments
+according to _format_, but store result in _string_ instead of standard output.
+_string_ must be large enough to store formatted result.
