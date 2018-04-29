@@ -30,10 +30,56 @@ conversion specifications characters `%...` :
 Printing "hello, world" (12 char) :
 * `%s        ->  "hello, world"`
 * `%10s      ->  "hello, world"` (at least 10 char printed)
-* `%.10s     ->  "hello, wor" (at most 10 char printed = precision)
-* `-15.10%s  ->  "hello, wor     " (left align because of "-", at least 15 char
-  wide, at most 10 char from string printed)
+* `%.10s     ->  "hello, wor"` (at most 10 char printed = precision)
+* `-15.10%s  ->  "hello, wor     "` (left aligned because of "-", at least 15
+  char wide, at most 10 char from string printed)
 
 `int sprintf(char *string, char *format, arg1, arg2, ...)` : format arguments
 according to _format_, but store result in _string_ instead of standard output.
 _string_ must be large enough to store formatted result.
+
+### 7.3 Variable-length Argument Lists
+Use `...` as the last argument to indicate the number and types of functions
+arguments may vary (`void minprintf(char *format, ...)`.
+
+The _unamed_ arguments are stored in a list, accessed with a moving pointer `ap`
+of type `va_list`. Initialization wih `va_start`, moved with `va_arg`.
+```C
+#include <stdarg.h>
+
+/* minprintf: minimal printf with variable argument list */
+void minprintf(char *fmt, ...)
+{
+    va_list ap; /* points to each unamed arg in turns */
+    char *p, *sval;
+    int ival;
+    double dval;
+
+    va_start(ap, fmt); /* make ap point to first unamed arg */
+    for (p = fmt; *p; ++p)
+    {
+        if (*p != '%')
+        {
+            putchar(*p);
+            continue;
+        }
+        switch(*++p)
+        {
+            case 'd':
+                ival = va_arg(ap, int);
+                printf("%d", ival);
+                break;
+            case 'f':
+                dval = va_arg(ap, double);
+                printf("%f", dval);
+                break;
+            case 's':
+                for (sval = va_arg(ap, char *); *sval; svam++)
+                    putchar(*sval);
+                break;
+            default:
+                putchar(*p);
+                break;
+        }
+    }
+    va_end(ap)
