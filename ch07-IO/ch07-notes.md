@@ -83,3 +83,26 @@ void minprintf(char *fmt, ...)
         }
     }
     va_end(ap)
+```
+
+### 7.4 Formatted Input - Scanf
+`int scanf(char *format, ...)` : read characters from _standard input_, convert
+and store result in argument list **pointers**. Return EOF or number of
+converted values.
+
+There is also the function `sscanf(char *s, char *format, ...)` which reads from
+_string_ instead of _standard input_.
+
+The string _format_ indicates how the conversion should be done :
+* `%d, %i` : convert to `int`
+* `%u` : convert to `unsigned int`
+* `%s` : convert to character string`
+* `%f, %e, %g` : convert to `float/double`
+
+Sometime there is `l` or `u` right after the `%` for `long` or `short` integers
+(`scanf("%lf", &v)`).
+
+* `25 Dec 1988 : char monthname[20]; scanf("%d %s %d", &day, monthname, &year);`
+* `mm/dd/yy : scanf("%d/%d/%d", &month, %day, &year);`
+
+`scanf()` skips whites spaces (including newlines) to read new input values.
