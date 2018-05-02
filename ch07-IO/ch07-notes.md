@@ -106,3 +106,13 @@ Sometime there is `l` or `u` right after the `%` for `long` or `short` integers
 * `mm/dd/yy : scanf("%d/%d/%d", &month, %day, &year);`
 
 `scanf()` skips whites spaces (including newlines) to read new input values.
+
+### 7.5 File Access
+The function `fopen()` takes the name of a file an return a **pointer to FILE**.
+FILE is a type name (defined with `typedef`).
+```C
+FILE *fp;
+
+/* mode can be r (read), w (write), a (append) and optional b (binary) */
+FILE *fopen(char *name, char *mode);
+```
