@@ -166,3 +166,34 @@ int getline(char *line, int max)
         return strlen(line);
 }
 ```
+
+### 7.8 Miscellaneous Functions
+
+1. String (from `<string.h>`)
+    * `strcat(s, t)`, `strncat(s, t, n)`
+    * `strcmp(s, t)`, `strncmp(s, t, n)`
+    * `strcpy(s, t)`, `strcnpy(s, t, n)` : copies `t` to `s`
+    * `strlen(s)`
+    * `strchr(s, c)` : return pointer to first `c` in `s`, `NULL` if none
+    * `strrchr(s, c)` : return pointer to last `c` in `s`, `NULL` if none
+
+2. Character (from `<ctype.h>`)
+    * `isalpha(c)`, `isupper(c)`, `islower(c)`, `isdigit(c)`, `isalnum(c)`
+    * `isspace(c)`
+    * `toupper(c)`, `tolower(c)`
+
+A program can execute system commands with `system(char *s)` where `s` is the
+name of the command (like `date`). It prints possible output of command to
+_stdout_ then resumes its execution.
+
+* `void *malloc(size_t n)` : return pointer to **n** bytes of uninitialized
+  storage, or `NULL`
+* `void *calloc(size_t n, size_t size)` : return pointer to enough space for an
+  array of **n** object of spedcified **size**. Storage is **initialized to 0**.
+
+Do not `free` something not obtained with malloc/calloc. Do not use something
+after calling `free` on it.
+
+`rand()` returns an integer in [0, RAND_MAX]. To produce an random float in [0,
+1] :
+`#define frand() ((double) rand() / (RAND_MAX+1.0))`
