@@ -134,3 +134,16 @@ same as `scanf` and `printf` but read from file instead of _stdin_.
 `int fclose(FILE *fp)` : close the file, free pointer fp so it can be reuse to
 open another file. Closing an output file also **flushes the putch() buffer**.
 Files are automatically closed when program exits without errors.
+
+### 7.6 Error Handling - Stderr and Exit
+**stderr** is an output stream (opened by OS when program starts), that appears
+on the screen, even if **stdout** is redirected to another file/program.
+
+To signal errors :
+* `fprintf(stderr, "error message")`
+* `exit(1), exit(2)` : terminates program. Argument can be used by the process
+  that called the program. `exit()` closes each opened file to flush buffers.
+
+Within _main_, `return expr <=> exit(expr)`. `int ferror(FILE *fp)` returns
+non-zero value if an error occurred on stream fp. `feof(FILE *fp)` is the same,
+but returns non-zero value if end of file occurred on fp.
