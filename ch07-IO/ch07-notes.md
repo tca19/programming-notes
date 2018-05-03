@@ -147,3 +147,22 @@ To signal errors :
 Within _main_, `return expr <=> exit(expr)`. `int ferror(FILE *fp)` returns
 non-zero value if an error occurred on stream fp. `feof(FILE *fp)` is the same,
 but returns non-zero value if end of file occurred on fp.
+
+### 7.7 Line Input and Output
+* `char fgets(char *line, int maxline, FILE *fp)` : read a line from `fp`
+  (including newline character) into character array `line`. Terminate `line`
+  with `\0`. Return `line` or `NULL` if EOF/error.
+* `int fputs(char *line, FILE *fp)` : write string `line` to `fp`, return 0 or
+  EOF.
+
+Then, an implementation of `getline()` can be :
+```C
+/* getline: read a line, return length */
+int getline(char *line, int max)
+{
+    if (fgets(line, max, stdin) == NULL)
+        return 0;
+    else
+        return strlen(line);
+}
+```
