@@ -96,7 +96,7 @@ _string_ instead of _standard input_.
 The string _format_ indicates how the conversion should be done :
 * `%d, %i` : convert to `int`
 * `%u` : convert to `unsigned int`
-* `%s` : convert to character string`
+* `%s` : convert to character string
 * `%f, %e, %g` : convert to `float/double`
 
 Sometime there is `l` or `u` right after the `%` for `long` or `short` integers
@@ -115,4 +115,22 @@ FILE *fp;
 
 /* mode can be r (read), w (write), a (append) and optional b (binary) */
 FILE *fopen(char *name, char *mode);
+fp = fopen(name, mode);
 ```
+
+Opening a non-existing file for writing/appending creates it. Writing to
+existing file _overwrite_ its content. If an error occurs in `fopen()`, it
+returns a `NULL` pointer. Once file is opened :
+* `int getc(FILE *fp)` : return next character from fp, or EOF.
+* `int putc(int c, FILE *fp)` : write character c, return it or EOF if error
+  occurred
+
+When program is started, OS opens 3 files and provides pointers to them :
+`stdin/stdout/stderr` (so `getchar()` can be written as `getc(stdin)`).
+
+`fscanf(FILE *fp, char *fmt, ...)` and `fprintf(FILE *fp, char *fmt, ...)` :
+same as `scanf` and `printf` but read from file instead of _stdin_.
+
+`int fclose(FILE *fp)` : close the file, free pointer fp so it can be reuse to
+open another file. Closing an output file also **flushes the putch() buffer**.
+Files are automatically closed when program exits without errors.
