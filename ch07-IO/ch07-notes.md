@@ -196,4 +196,5 @@ after calling `free` on it.
 
 `rand()` returns an integer in [0, RAND_MAX]. To produce an random float in [0,
 1] :
+
 `#define frand() ((double) rand() / (RAND_MAX+1.0))`
