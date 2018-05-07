@@ -18,3 +18,17 @@ are files (like `./a.out <file1 >file2`), the shell opends the files with file
 identifer 0 for input and 2 for output. **Progam does not know if input comes
 from keyboard or from file, only see it comes from file identifier 0 (same is
 true for file identifier 1, whether it goes to screen of a file)**.
+
+### 8.2 Low Level I/O - Read and Write
+* `int read(int fd, char *buf, int n)` : read `n` bytes from files descriptor
+  `fd` into character array `buf`, return number of read bytes
+* `int write(int fd, char *buf, int n)` : read `n` bytes from `buf` to file
+  descripor `fd`, return number of written bytes (if it's less than `n`, error
+  occurred).
+
+Large values of `n` => fewer system calls (functions above **are system
+calls**). These two routines can be used to construct higher-level routines like
+_unbuffered_ `getchar()` (with `n` set to 1) or _buffered_ `getchar()`.
+
+Use `#undef` to overwrite a library function declared in a header with a macro
+(like `#undef getchar`).
