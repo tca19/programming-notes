@@ -32,3 +32,19 @@ _unbuffered_ `getchar()` (with `n` set to 1) or _buffered_ `getchar()`.
 
 Use `#undef` to overwrite a library function declared in a header with a macro
 (like `#undef getchar`).
+
+### 8.3 Open, Creat, Close, Unlink
+To open files, 2 systems calls : ̣̣̣̣`open` and `creat`, both return a file
+descriptor instead of FILE pointer and are contained in `#include <fnctl.h>`.
+```C
+#include <fnctl.h>
+#define perms 0666 /* 9 bits of permission information for owner/group/other */
+
+/* either O_RDONLY, O_WRONLY or O_RDWR */
+int fd1 = open(name, O_RDONLY, perms); /* error if file name does not exist */
+int fd2 = creat(name, perms); /* create file or re-write it */
+```
+
+Around 20 files can be opened simultaneously. If a program need to process more
+than 20 files, it must close some files with `close (int fd)` (so this file
+descriptor `fd` can be reused to open another file).
