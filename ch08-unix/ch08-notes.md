@@ -20,6 +20,8 @@ from keyboard or from file, only see it comes from file identifier 0 (same is
 true for file identifier 1, whether it goes to screen of a file)**.
 
 ### 8.2 Low Level I/O - Read and Write
+**Every functions here are in `#include <unistd.h>`.**
+
 * `int read(int fd, char *buf, int n)` : read `n` bytes from files descriptor
   `fd` into character array `buf`, return number of read bytes
 * `int write(int fd, char *buf, int n)` : read `n` bytes from `buf` to file
@@ -35,7 +37,7 @@ Use `#undef` to overwrite a library function declared in a header with a macro
 
 ### 8.3 Open, Creat, Close, Unlink
 To open files, 2 systems calls : ̣̣̣̣`open` and `creat`, both return a file
-descriptor instead of FILE pointer and are contained in `#include <fnctl.h>`.
+descriptor instead of FILE pointer and are contained in `#include <fcntl.h>`.
 ```C
 #include <fnctl.h>
 #define perms 0666 /* 9 bits of permission information for owner/group/other */
@@ -48,3 +50,30 @@ int fd2 = creat(name, perms); /* create file or re-write it */
 Around 20 files can be opened simultaneously. If a program need to process more
 than 20 files, it must close some files with `close (int fd)` (so this file
 descriptor `fd` can be reused to open another file).
+
+### 8.4 Random Access - Lseek
+`long lseek(int fd, long offset, int origin)` : move current position in file
+`fd` by `offset`relatively to `origin` (0 from beginning, 1 from current
+position, 2 from end of file). Return the new position in file.
+
+To append to a file, move to the end `lseek(fd, 0L, 2);` then use `write()`.
+Standard library function is `fseek()`.
+
+### 8.5 Example - An implementation of Fopen and Getc
+A FILE structure (declared in `<stdio.h>`) is composed of :
+* pointer to a buffer
+* count of number of char left in buffer
+* pointer to next char position in buffer
+* file descriptor
+* flags for permission, status...
+
+Variable/function names in library **usually starts with _ to not collide**
+with user's variable/function names.
+
+`getc()` returns `(unsigned char)` to ensure that characters are positive.
+`fopen()` uses `open()` to open file and set flags of FILE structure, but it
+does not allocate storage for character buffer of FILE.
+
+A FILE object uses a buffer to return characters when `getc()` is called but
+when buffer is empty (like right after a FILE object is created), it calls
+`_fillbuffer()` that calls `read()` to read some characters from file to buffer.
