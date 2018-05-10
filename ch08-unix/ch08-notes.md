@@ -77,3 +77,24 @@ does not allocate storage for character buffer of FILE.
 A FILE object uses a buffer to return characters when `getc()` is called but
 when buffer is empty (like right after a FILE object is created), it calls
 `_fillbuffer()` that calls `read()` to read some characters from file to buffer.
+
+### 8.6 Example - Listing Directories
+In UNIX, directories are **also files** that contain list of filenames and
+location of each file (inode) so knowing the content of a directory is like
+reading a file.
+
+The program that prints the size of files in directories needs :
+* a structure `Dirent` that contains filename and inode
+* threed routines : `DIR *opendir(char *)`, `Dirent *readdir(DIR *)` and `void
+  closedir(DIR *)`
+
+`int stat(char *name, struct stat *st)` is a system function that reads the
+information of file `name` and load it into structure `st` composed of device of
+inode, inode, file size, modification/creation/access time... This `struct stat`
+is declared in `<sys/stat.h>`, and uses types declared in `<sys/types.h>`.
+
+Reading content of directory :
+* `opendir()`
+* call `readdir()` until getting `NULL`. It returns a directory entry `Dirent`
+  (either a file or another directory)
+* `closedir()`
