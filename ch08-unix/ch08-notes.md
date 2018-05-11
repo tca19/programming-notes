@@ -98,3 +98,15 @@ Reading content of directory :
 * call `readdir()` until getting `NULL`. It returns a directory entry `Dirent`
   (either a file or another directory)
 * `closedir()`
+
+### 8.7 Example - A Storage Allocator
+`malloc()` will request space from OS as needed instead of using a fixed-size
+array defined at compilation time. `malloc()` stores a linked list of _free
+blocks_.  Each free block has : a size, a pointer to next free block and a free
+space.
+
+When a user requests a free space, first _large enough_ free block in the list
+is used. It is split in two parts : one is unlinked from list and returned, the
+other (remaining free space of the block) stays in linked list, but its size is
+reduced. If no large enough block exists, `malloc()` asks the OS for another
+large chunk of memory.
