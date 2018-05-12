@@ -10,12 +10,13 @@ union header         /* block header */
 	Align x;     /* force alignment of blocks */
 };
 
+#define NULL 0
 typedef union header Header;
 static Header base;          /* empty list to get started */
 static Header *freep = NULL;  /* start of free list */
 
-/* malloc: general-purpose storage allocator */
-void *malloc(unsigned nbytes)
+/* malloc_: general-purpose storage allocator */
+void *malloc_(unsigned nbytes)
 {
 	Header *p, *prevp;
 	Header *morecore(unsigned);
@@ -34,27 +35,29 @@ void *malloc(unsigned nbytes)
 			if (p->s.size == nunits) /* exactly */
 				prevp->s.ptr = p->s.ptr;
 			else
-			{
+			{       /* allocate tail end, reduce size by nunits */
 				p->s.size -= nunits;
 				p += p->s.size;
-				p->s.size ) = nunits;
+				p->s.size = nunits;
 			}
 			freep = prevp;
 			return (void *) (p+1);
 		}
-		if (p == freep) /* wrapped around free list */
+		if (p == freep) /* iterated all blocks, none are big enough */
 			if ((p = morecore(nunits)) == NULL)
 				return NULL;  /* none left */
 	}
 }
 
 #define NALLOC  1024   /* minimum #units to request */
+#include <unistd.h>
 
 /* morecore: ask system for more memory */
-static Header *morecore(unsigned nu)
+Header *morecore(unsigned nu)
 {
 	char *cp, *sbrk(int);
 	Header *up;
+	void free_(void *);
 
 	if (nu < NALLOC)
 		nu = NALLOC;
@@ -63,12 +66,12 @@ static Header *morecore(unsigned nu)
 		return NULL;
 	up = (Header *) cp;
 	up->s.size = nu;
-	free((void *)(up+1));
+	free_((void *)(up+1));
 	return freep;
 }
 
-/* free: put block ap in free list */
-void free(void *ap)
+/* free_: put block ap in free_ list */
+void free_(void *ap)
 {
 	Header *bp, *p;
 
