@@ -27,4 +27,12 @@ An object (also called a variable) has two main attributes :
 
 Automatic variables only live inside the block where they are declared. Static
 variables (`static`) continue to live even after the block where they are
-declared is exited.
+declared is exited. _Objects declared at the same level as function definitions
+are always static_. Identifiers preceeded by the ̣̣`extern` keyword are available
+to the whole program (external linkage).
+
+`unsigned char` consumes the same amount of space as `signed char` and `char`.
+The _derived_ types are : arrays, functions, pointers, structures and unions.
+Object = named region of storage; lvalue = expression referring to an object.
+
+
