@@ -126,3 +126,11 @@ If there is no `default` label in a `switch` and no `case` is matched, nothing
 happens.\
 When `return` is followed by an expression, the expression is converted to the
 type returned by the function.
+
+### A.10 External Declarations
+C files consists of a sequence of declarations and functions definitions.\
+Functions can not return an array or a function. During the call of a function,
+the arguments are converted as necessary.\
+External declarations are _externarl_ because they are _outside_ functions.
+External declaration for an object is a definition if it has an identifier. Each
+object must have exactly one definition.
