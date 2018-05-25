@@ -134,3 +134,11 @@ the arguments are converted as necessary.\
 External declarations are _externarl_ because they are _outside_ functions.
 External declaration for an object is a definition if it has an identifier. Each
 object must have exactly one definition.
+
+### A.11 Scope and Linkage
+* **Lexical Scope** : region of a program where an identifier characteristics
+  are understood. Most of the identifiers (object, struct, enum, union or
+  function) have a scope that goes from the moment it appears to the end of the
+  translation unit.
+* **Linkage** : within a translation unit, all declarations of the same
+  object/function refer to the same thing.
