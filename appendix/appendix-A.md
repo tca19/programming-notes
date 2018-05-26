@@ -141,4 +141,25 @@ object must have exactly one definition.
   function) have a scope that goes from the moment it appears to the end of the
   translation unit.
 * **Linkage** : within a translation unit, all declarations of the same
-  object/function refer to the same thing.
+  object/function (with internal linkage) refer to the same thing. Within a
+  block, an identifier with `extern` keyword refers to the object/function
+  declared _outside_ the block.
+
+### A.12 Preprocessing
+**Preprocessor** : macro substitution, conditional compilation, inclusion of
+named files.
+
+Comments are replaced by a single space. Backslash followed by a newline is
+deleted.
+
+A `#` before an identifier inside the replacement text makes the identifier
+surrounded by `"`. `#define tempfile(dir) #dir "/%s"` yields `"/usr/tmp" "/%s"`
+with the macro call `tempfir(/usr/tmp)`.
+
+`#ifdef identifier` is equivalent to `#if defined identifier`. The second part
+is replaced by `1L` is identifier exists, `0L` otherwise. If there is a `#if`,
+there must be a `#endif`.
+
+Several identifiers are predefined are replace by preprocessor : `__LINE__`
+(source code line), `__FILE__` (filename being compiled), `__DATE__, __TIME__`
+(date and time of compilation).
