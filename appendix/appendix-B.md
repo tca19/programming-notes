@@ -48,3 +48,35 @@ Common functions :
   * `int fseek(FILE *stream, long offset, int origin)`
   * `int fgetpos(FILE *stream, fpos_t, *ptr)`, `int fsetpos(FILE *stream, const
     fpos_t *ptr)`
+
+### B.2 Character Class Tests `<ctype.h>`
+Contains many functions to test characters (`isalnum()`, `isdigit()`,
+`isupper()`, `isspace()`...). They take and return an `int`. Contains also
+`tolower()` and `toupper()`.
+
+### B.3 String Functions `<string.h>`
+1. Starting with **str**
+  * `char *strcpy(s, ct)` : copy string `ct` to `s`. Return `s`.
+  * `char *strcat(s, ct)` : concatenate string `ct` at the end of `s`. Return
+    `s`.
+  * `int strcmp(cs, ct)`
+  * `char *strchr(cs, c)` : return pointer to first occurrence of `c` in `cs`.
+  * `char *strstr(cs, ct)` : return pointer to first occurrence of string `ct`
+    in string `cs`, `NULL` if none are present.
+  * `char *strtok(s, ct)`
+2. Starting with **mem** - to manipulate objects as character arrays
+  * `void *memcpy(void *s, const void *ct, size_t n)` : copy `n` characters from
+    `ct` to `s`.
+  * `int memcmp(cs, ct, n)` : compare the first `n` characters of `cs` with
+    `ct`.
+  * `void *memset(void *s, int c, size_t n)` : place character `c` into first
+    `n` characters of `s`. Return `s`.
+
+### B.4 Mathematical Functions `<math.h>`
+**Domain error** : argument is outside the domain over which the function is
+defined.\
+**Range errors** : result of the function cannnot be represented as a `double`.
+
+Common functions : `sin()`, `asin()`, `sinh()` (same exists for cosine/tangent),
+`log()` (natural logarithm), `log10()`, `fabs()`, `ldexp(x, n)` (x.2^n),
+`fmod(x, y)` (remainder of x/y).
