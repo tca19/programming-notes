@@ -40,3 +40,24 @@ support for datatypes.
   default)
 * `float` _were_ expanded to `double` (PDP-11 hardware could only do `float` or
   `double`, not the two at the same time; need a reset to switch mode)
+
+### The Standard I/O Library and C Preprocessor
+I/O is not defined within C, but provided by libraries (so manual is smaller and
+laguage is faster to learn). The C preprocessor has 2 main purposes : - macro
+replacement; - inclusion of files. Better to define macro names in upper case so
+it is no confused with function names.
+
+> The UNIX Version 7 shell was written by Steve Bourne. The shell does not used
+> `malloc`, but has its own storage management with `sbrk` making the code much
+> harder to maintain.
+
+### K&R C
+* 1972-73: early C (addding keywords like `unsigned` and `long` to match new
+  hardware)
+* 1976-79: K&R C (published in 1978)
+* 1983-89: ANSI C
+* 1985-89: C++
+
+### The Present Day: ANSI C
+ANSI C is defined in a 200 pages manual. People should work with ANSI C, not K&R
+C. ANSI C was finally adopted in 1989.
