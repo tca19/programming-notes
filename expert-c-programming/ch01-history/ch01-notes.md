@@ -61,3 +61,16 @@ it is no confused with function names.
 ### The Present Day: ANSI C
 ANSI C is defined in a 200 pages manual. People should work with ANSI C, not K&R
 C. ANSI C was finally adopted in 1989.
+
+### It's Nice, but Is It Standard ?
+When something is written as _implementation defined_ or _unspecified_, the code
+is unportable. If something is _undefined_ or violating a _constraint_, the code
+is bad.\
+A _strictly-conforming_ program :
+* only uses _specified features_
+* has no output that depends on _implementation-defined_, _unspecified_ or
+  _undefined_ features.
+
+Differences between K&R C and ANSI C ?
+* function prototype with parameter types
+* new keywords ẹ̣̣̣̣̣̣̣̣̣̣̣̣̣`enum, const, signed, void`.
