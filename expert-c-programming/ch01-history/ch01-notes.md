@@ -74,3 +74,37 @@ A _strictly-conforming_ program :
 Differences between K&R C and ANSI C ?
 * function prototype with parameter types
 * new keywords ẹ̣̣̣̣̣̣̣̣̣̣̣̣̣`enum, const, signed, void`.
+* adjacent strings are concatenated
+
+It's better to leave parameter names in function signatures, they contain
+_semantic_ information (`char *strcpy(char *dest, const char *src)`).
+
+`const char**` and `char **` are incompatible types : the first one is a pointer
+to a pointer to a qualified type (because of `const`). The second one is a
+pointer to a pointer to an unqualified type.
+
+A `const` variable can be modified via pointers but not via identifie. Mostly
+useful to indicate a function tha takes a `const` poointer will not modify the
+pointer value ("i am giving you a pointer to this thing, but you may not change
+it").
+
+ANSI C add more conversion rules (if one operand is `double`, convert the other
+one to `double`, if one is `long` ...)
+
+In `(-1 < sizeof(ar) / sizeof(ar[0]))` can be evaluated as true. `sizeof` type
+is unsigned, so `-1` is promoted to unsigned, which yields a very big positive
+integer. This can occur in ANSI C. Add an `(int)` before the first `sizeof` so
+no promotion to unsigned happens.
+
+> Don't use an `unsigned` type to represent a quantity just because it will
+> never be negative (no hidden promotion with mixed types).
+> Only use `unsigned` for bitfields or binary masks.
+
+> Original meaning of **hacker** : a gifted programmer.
+
+The **F**ree **S**oftware **F**oundation (founded by Richard Stallman) has the
+ambition to create a public-domain implementation of UNIX called GNU. Some of
+the best products developed by the FSF are **gcc** and **gdb**. The `#pragma`
+command was specified by ANSI to have an implementation-defined effect, so
+developers of **gcc** decided to launch a game everytime it encounters the
+command in source code.
