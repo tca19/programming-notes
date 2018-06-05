@@ -16,4 +16,8 @@ terminator. Correct usage is `malloc(strlen(str)+1)`.\
 > most fundamental problems in C, and its most important addition (class) build
 > on the deficient C type model.
 
-`NUL` end an ASCII string. `NULL` points to nothing.
+`NUL` ends an ASCII string. `NULL` points to nothing.
+
+### Sins of Commission
+Things the language does that it shouldn't do. In a `switch` statement, the
+default case can appear anywhere in the list of cases.
