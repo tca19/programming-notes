@@ -19,5 +19,21 @@ terminator. Correct usage is `malloc(strlen(str)+1)`.\
 `NUL` ends an ASCII string. `NULL` points to nothing.
 
 ### Sins of Commission
-Things the language does that it shouldn't do. In a `switch` statement, the
-default case can appear anywhere in the list of cases.
+Things the language does that it shouldn't do.
+
+In a `switch` statement, the default case can appear anywhere in the list of
+cases. If no case is matched and there is no default case, nothing happens. Some
+variables can be declared right after the opening bracket of a switch statement,
+but it won't be executed, only the statements in the right case will.
+
+The ̣`const` keyword does not really mean constant in C.
+```C
+const int two=2;
+
+swicth(i)
+{
+  case 1: printf("case 1\n");
+  case two: printf("case 2\n); /* error, constant expression required */
+  default: ;
+}
+```
