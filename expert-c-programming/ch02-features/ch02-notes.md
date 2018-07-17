@@ -19,6 +19,7 @@ terminator. Correct usage is `malloc(strlen(str)+1)`.\
 `NUL` ends an ASCII string. `NULL` points to nothing.
 
 ### Sins of Commission
+<<<<<<< HEAD
 Things the language does that it shouldn't do. In a `switch` statement, the
 default case can appear anywhere in the list of cases (not necessarily at the
 end).
