@@ -20,4 +20,23 @@ terminator. Correct usage is `malloc(strlen(str)+1)`.\
 
 ### Sins of Commission
 Things the language does that it shouldn't do. In a `switch` statement, the
-default case can appear anywhere in the list of cases.
+default case can appear anywhere in the list of cases (not necessarily at the
+end).
+In C, you can allocate memory for variables right after an opening brace (and
+before some statement) :
+```C
+if (a > b) /* swap a,b */
+{
+    int tmp = a;
+    a = b; b = tmp;
+}
+```
+In a `switch`, the flow of control continues down (fallthrough) if there is not
+`break` and one statement is executed (this will priny 3 lines).
+```C
+swicth (2) {
+    case 1: /* statemnents1 */
+    case 2: /* statemnents2 */
+    case 3: /* statemnents3 */
+    default: printf("default\n');
+```
