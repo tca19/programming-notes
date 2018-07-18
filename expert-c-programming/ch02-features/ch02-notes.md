@@ -19,7 +19,6 @@ terminator. Correct usage is `malloc(strlen(str)+1)`.\
 `NUL` ends an ASCII string. `NULL` points to nothing.
 
 ### Sins of Commission
-<<<<<<< HEAD
 Things the language does that it shouldn't do. In a `switch` statement, the
 default case can appear anywhere in the list of cases (not necessarily at the
 end).
@@ -32,12 +31,15 @@ if (a > b) /* swap a,b */
     a = b; b = tmp;
 }
 ```
-In a `switch`, the flow of control continues down (fallthrough) if there is not
-`break` and one statement is executed (this will priny 3 lines).
+In a `switch`, the flow of control continues down (fallthrough) if there is no
+`break` and one statement is executed (this will print 3 lines).
 ```C
-swicth (2) {
+switch (2) {
     case 1: /* statemnents1 */
     case 2: /* statemnents2 */
     case 3: /* statemnents3 */
     default: printf("default\n');
 ```
+Be careful when using ̣`break` inside a `switch` : it exists nearest
+iteration/switch statement, so sometimes exits the `switch` even if that was not
+intended.
