@@ -40,6 +40,10 @@ switch (2) {
     case 3: /* statemnents3 */
     default: printf("default\n');
 ```
-Be careful when using ̣`break` inside a `switch` : it exists nearest
-iteration/switch statement, so sometimes exits the `switch` even if that was not
+Be careful when using ̣`break` inside a `switch` : it exits nearest
+iteration/switch statement, so sometimes it exits the `switch` even if that was not
 intended.
+
+In ANSI C, adjacent strings are concatenated. But if the intention is to declare
+an array of string and a comma between 2 elements is missing, it will causes
+these 2 strings to be concatenated.
