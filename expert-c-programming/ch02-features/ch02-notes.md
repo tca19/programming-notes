@@ -31,6 +31,7 @@ if (a > b) /* swap a,b */
     a = b; b = tmp;
 }
 ```
+
 In a `switch`, the flow of control continues down (fallthrough) if there is no
 `break` and one statement is executed (this will print 3 lines).
 ```C
@@ -57,3 +58,15 @@ generate_initializer(char *string)
     separator = ',';
 }
 ```
+
+Adding `static` when declaring a function restricts the visibility of the
+function only to the file where it's declared. Default behavior is to be
+globally visible (same as adding the keyword `extern`) -> **BAD : Software
+objects should have the most limited scope by default.** The problem is that if
+two libraries need to share an object, there is no other options than make it
+globally visible.
+Internal functions (for one big functions of a library) should be made `static`
+(so not visible to anyone linking that library).
+
+### Sins of Mission
+Things that are completely off the wall (bad fit).
