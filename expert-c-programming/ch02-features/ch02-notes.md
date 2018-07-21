@@ -47,3 +47,13 @@ intended.
 In ANSI C, adjacent strings are concatenated. But if the intention is to declare
 an array of string and a comma between 2 elements is missing, it will causes
 these 2 strings to be concatenated.
+
+To declare a function that does something different during the first call :
+```C
+generate_initializer(char *string)
+{
+    static char separator='';
+    printf("%c %s \n", separator, string);
+    separator = ',';
+}
+```
