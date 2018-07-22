@@ -70,3 +70,14 @@ Internal functions (for one big functions of a library) should be made `static`
 
 ### Sins of Mission
 Things that are completely off the wall (bad fit).
+
+Many symbols or keywords in C can have **different meaning depending on the
+context** : `static` inside a function indicates a variable that retains value
+between calls but `static` used at the function level indicates a function only
+visible to one file. `&` can be the bitwise operator or the address of a
+variable.
+
+`sizeof (type)` **AND** `sizeof variable` like:
+* `sizeof (float)`
+* `sizeof *arr`
+**DO NOT** write ambiguoos things like `apple = sizeof (int) * p`
