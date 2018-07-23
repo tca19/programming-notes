@@ -80,4 +80,15 @@ variable.
 `sizeof (type)` **AND** `sizeof variable` like:
 * `sizeof (float)`
 * `sizeof *arr`
-**DO NOT** write ambiguoos things like `apple = sizeof (int) * p`
+**DO NOT** write ambiguous things like `apple = sizeof (int) * p`
+
+According to Kerninghan and Ritchie :
+> some of the operators have the wrong precedences
+
+* `*p.f` : should take the `f` field of object pointed by `p`, but in fact it
+ uses `p.f`as a pointer
+* `c=getchar() != EOF` : should do `(c=getchar()) != EOF` but it does `c =
+  (getchar() != EOF)`
+* arithmetic `+` is higher than bitwise `<<` (`msb << (4+lsb)`)
+
+**ALWAYS put parentheses around expressions that mixe booleans, arithmetic...**
