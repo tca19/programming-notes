@@ -92,3 +92,5 @@ According to Kerninghan and Ritchie :
 * arithmetic `+` is higher than bitwise `<<` (`msb << (4+lsb)`)
 
 **ALWAYS put parentheses around expressions that mixe booleans, arithmetic...**
+
+In an expression like `a = b = c`, the rightmost operation is evaluated first.
