@@ -94,3 +94,24 @@ According to Kerninghan and Ritchie :
 **ALWAYS put parentheses around expressions that mixe booleans, arithmetic...**
 
 In an expression like `a = b = c`, the rightmost operation is evaluated first.
+
+Order of evaluation of the arguments in a function call is unspecified.
+
+The function `gets(line)` read a line from standard input into buffer `line`,
+but it does not check if the line can overwrite the buffer, thus it can be used
+to overwrite an existing entry in the middle of the stack. The function
+`fgets()` was introduced to solve this problem and can only read up to a certain
+limit of characters.
+```C
+char line[512];
+
+/* not secure */
+gets(line);
+
+/* secure */
+if (fgets(line, sizeof(line), stdin) == NULL)
+    exit(1);
+```
+
+### Sins of Omission
+
