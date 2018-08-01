@@ -114,4 +114,4 @@ if (fgets(line, sizeof(line), stdin) == NULL)
 ```
 
 ### Sins of Omission
-
+Things the language doesn't do that it should.
