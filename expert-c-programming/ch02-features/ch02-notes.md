@@ -114,7 +114,13 @@ if (fgets(line, sizeof(line), stdin) == NULL)
 ```
 
 ### Sins of Omission
-Things the language doesn't do that it should.
+Things the language doesn't do that it should (like missing standard argument
+processing).
 
+C has no way to distinguish flag and positional commnd arguments. For example,
+you can't remove a file that starts with an hyphen, you need to give entire
+pathname of the file otherwise `rm` thinks it's a command flag.
 
+Escaping newline (for macro) can be bad because a space between `\` and newline
+makes it not working and is hard to see.
 
