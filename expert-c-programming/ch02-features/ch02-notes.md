@@ -121,6 +121,8 @@ C has no way to distinguish flag and positional commnd arguments. For example,
 you can't remove a file that starts with an hyphen, you need to give entire
 pathname of the file otherwise `rm` thinks it's a command flag.
 
-Escaping newline (for macro) can be bad because a space between `\` and newline
-makes it not working and is hard to see.
-
+Escaping newline with "\ *newline*" (for macro or string concatenation) can be
+bad because if a space is inadvertenly inserted like "\ *whitespace newline*",
+it will not work the way it is supposed to, and this error won't be easy to see.
+Comments can be opened without wanting to (`ratio = *x/*y`). C++ comments can
+make valid C code not working.
