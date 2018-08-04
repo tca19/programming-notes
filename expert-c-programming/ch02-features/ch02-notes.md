@@ -139,4 +139,4 @@ stack so memory is reused). Multiple solutions :
 * pass a pointer to array as function argument and allocate memory somewhere
   else (like in main())
 
-
+To make good code, make sure it is `link` clean and it passes `cstyle`.
