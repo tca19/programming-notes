@@ -119,10 +119,24 @@ processing).
 
 C has no way to distinguish flag and positional commnd arguments. For example,
 you can't remove a file that starts with an hyphen, you need to give entire
-pathname of the file otherwise `rm` thinks it's a command flag.
+pathname of the file, otherwise `rm` thinks it's a command flag.
 
 Escaping newline with "\ *newline*" (for macro or string concatenation) can be
 bad because if a space is inadvertenly inserted like "\ *whitespace newline*",
 it will not work the way it is supposed to, and this error won't be easy to see.
 Comments can be opened without wanting to (`ratio = *x/*y`). C++ comments can
-make valid C code not working.
+make valid C code not working (`x = a//* */b;`).
+
+If a function declares a local array (`char buffer[120];`) and returns this array
+(`return buffer;`), the code **will compile fine, but will produce garbage value
+at running time.** Indeed the local variable `buffer` will be cleared when
+function exits, and overwritten by other variables (because declared on the
+stack so memory is reused). Multiple solutions :
+* use a global declared variable (but can be modified by other functions)
+* declare `buffer` as a static variable (but will be overwitten at next function
+  calls)
+* use `malloc()` to allocate memory (don't have the previous inconvenients)
+* pass a pointer to array as function argument and allocate memory somewhere
+  else (like in main())
+
+
