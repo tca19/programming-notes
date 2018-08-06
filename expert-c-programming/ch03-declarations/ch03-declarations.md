@@ -65,3 +65,25 @@ union bits32_tag {
 } value;
 ```
 The bytes can be accessed individually with `value.byte.c0`
+
+#### `enum`
+A simple way to associate a series of names with a series of integers.
+```C
+enum sizes { small=7, medium, large=10, xxlarge };
+/* medium is 8, xxlarge is 11. If a value is assigned, the next value is one
+greater */
+```
+
+### The Precedence Rule
+1. Declarations are read by starting with the name (**leftmost identifier)** and
+   then reading in precedence order
+2. From high to low:
+    1. things grouped in parentheses
+    2. postfix operators (either `()` for function or `[]` for array)
+    3. prefix operator (`*`, denoting pointer to)
+3. `const` or `volatile` keyword
+4. tokens remaining are the basic type of the declaration
+
+If `const` is next to a type specifier (`int/long`) it applies to the type
+specifier. Otherwise, it applies to the pointer asterisk on its immediate left.
+`const` means **read-only**, not necessarily that the content is constant.
