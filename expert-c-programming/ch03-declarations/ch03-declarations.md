@@ -40,6 +40,28 @@ To copy an array, enclose it in a `struct`, then copy the `struct`:
 ```C
 struct s_tag { int a[100]; };
 struct s_tag orange, lemon;
-/* for loop to initialize array orange with random values [...] */
+/* for loop to initialize orange.a with random values [...] */
 orange = lemon;
 ```
+
+#### `union`
+Similar to `struct`, contains several fields of different types, but only one
+field can be set at a time (all members share the same memory adress, so writing
+to one overwrite the others). *Problem*:  there is no way to know which field is
+set. `union` is usually used to save space by not storing all possibilities for
+certain data items. In this example, an animal can either have fur or more than
+4 legs.
+```C
+union secondary_characteristics {
+    char has_fur;
+    short num_of_legs_in_excess_of_4;
+};
+```
+Unions can also be used to represent the same data in several ways.
+```C
+union bits32_tag {
+    int whole;                        /* one 32-bit value */
+    struct {char c0,c1,c2,c3; } byte; /* four 8-bit bytes */
+} value;
+```
+The bytes can be accessed individually with `value.byte.c0`
