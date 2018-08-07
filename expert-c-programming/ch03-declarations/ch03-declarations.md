@@ -117,3 +117,18 @@ usigned peach i; /* valid */
 
 typedef int banana;
 unsigned banana i; /* not valid */
+```
+
+Each `union` or `struct` has its own namespace, so the same name can be used in
+two `union/struct`.
+With `typedef struct my_tag {int i;} my_type;`, the `struct` keyword is now
+obsolete (`my_type variable_1;`). But the structure is declared and can also
+directly be used (`struct my_tag variable_2;`).
+
+**Don't use `typedef` with `struct`. Not really space savy (only drop the need
+of writing `struct` each time we use it) and harder to read.**
+
+> Hackers at MIT wired the Coke vending machine to the lab local ethernet to be
+> able to check how many bottles were remaining. Then they modified the `finger`
+> server to access this information from anywhere on the Internet with `finger
+> coke@g.gp.cs.cmu.edu`.
