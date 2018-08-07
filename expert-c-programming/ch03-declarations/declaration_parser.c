@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #define MAXTOKENS 100
 #define MAXTOKENLEN 64
+#define STRCMP(a, R, b) (strcmp(a, b) R 0)
 
 enum type_tag { IDENTIFIER, QUALIFIER, TYPE };
 
@@ -23,23 +24,23 @@ enum type_tag classify_string(void)
 /* figure out the identifier type */
 {
 	char *s = this.string;
-	if (!strcmp(s,"const")) {
+	if ( STRCMP(s, ==, "const")) {
 		strcpy(s,"read-only");
 		return QUALIFIER;
 	}
-	if (!strcmp(s,"volatile")) return QUALIFIER;
-	if (!strcmp(s,"void")) return TYPE;
-	if (!strcmp(s,"char")) return TYPE;
-	if (!strcmp(s,"signed")) return TYPE;
-	if (!strcmp(s,"unsigned")) return TYPE;
-	if (!strcmp(s,"short")) return TYPE;
-	if (!strcmp(s,"int")) return TYPE;
-	if (!strcmp(s,"long")) return TYPE;
-	if (!strcmp(s,"float")) return TYPE;
-	if (!strcmp(s,"double")) return TYPE;
-	if (!strcmp(s,"struct")) return TYPE;
-	if (!strcmp(s,"union")) return TYPE;
-	if (!strcmp(s,"enum")) return TYPE;
+	if ( STRCMP(s, ==, "volatile")) return QUALIFIER;
+	if ( STRCMP(s, ==, "void")) return TYPE;
+	if ( STRCMP(s, ==, "char")) return TYPE;
+	if ( STRCMP(s, ==, "signed")) return TYPE;
+	if ( STRCMP(s, ==, "unsigned")) return TYPE;
+	if ( STRCMP(s, ==, "short")) return TYPE;
+	if ( STRCMP(s, ==, "int")) return TYPE;
+	if ( STRCMP(s, ==, "long")) return TYPE;
+	if ( STRCMP(s, ==, "float")) return TYPE;
+	if ( STRCMP(s, ==, "double")) return TYPE;
+	if ( STRCMP(s, ==, "struct")) return TYPE;
+	if ( STRCMP(s, ==, "union")) return TYPE;
+	if ( STRCMP(s, ==, "enum")) return TYPE;
 	return IDENTIFIER;
 }
 
@@ -70,7 +71,7 @@ void gettoken(void) /* read next token into "this" */
 	return;
 }
 /* The piece of code that understandeth all parsing. */
-read_to_first_identifier() {
+void read_to_first_identifier() {
 	gettoken();
 	while (this.type != IDENTIFIER) {
 		push(this);
@@ -80,7 +81,7 @@ read_to_first_identifier() {
 	gettoken();
 }
 
-deal_with_arrays() {
+void deal_with_arrays() {
 	while (this.type == '[') {
 		printf("array ");
 		gettoken(); /* a number or ']' */
@@ -93,7 +94,7 @@ deal_with_arrays() {
 	}
 }
 
-deal_with_function_args() {
+void deal_with_function_args() {
 	while (this.type!=')') {
 		gettoken();
 	}
@@ -101,13 +102,13 @@ deal_with_function_args() {
 	printf("function returning ");
 }
 
-deal_with_pointers() {
+void deal_with_pointers() {
 	while ( stack[top].type== '*' ) {
 		printf("%s ", pop.string );
 	}
 }
 
-deal_with_declarator() {
+void deal_with_declarator() {
 	/* deal with possible array/function following the identifier */
 	switch (this.type) {
 		case '[' : deal_with_arrays(); break;
@@ -128,7 +129,7 @@ deal_with_declarator() {
 	}
 }
 
-main()
+int main()
 {
 	/* put tokens on stack until we reach identifier */
 	read_to_first_identifier();
