@@ -87,3 +87,33 @@ greater */
 If `const` is next to a type specifier (`int/long`) it applies to the type
 specifier. Otherwise, it applies to the pointer asterisk on its immediate left.
 `const` means **read-only**, not necessarily that the content is constant.
+
+### `typedef` Can Be Your Friend
+Similar to a macro text replacement: doesn't introduce a new type, just a name
+for an existing type (*this name is a synomym for the stated type*).
+```C
+/* before (note: void (*func)(int) is a pointer `func` to a function taking int
+and returning void */
+void (*signal(int sig, void (*func)(int)) )(int);
+
+/* after (factorizing common parts with a typedef) */
+typedef void (*ptr_to_func) (int); /* ptr_to_func is a pointer to a function
+that takes an int and return void */
+ptr_to_func signal(int, ptr_to_func);
+```
+
+Don't declare several `typedef` at once (`typedef int *ptr, (*func)(), arr[5];`.
+
+**How to declare typedef?**: Just write a declaration for a variable with the
+type you desire. Have the name of the variable be the name you want for the
+alias. Write the keyword `typedef` at the start like:
+`typedef int (*array_ptr)[100];`.
+
+`typedef` is not **exactly** the same as a macro replacement. A macro can be
+extended, not a `typedef`.
+```C
+#define peach int
+usigned peach i; /* valid */
+
+typedef int banana;
+unsigned banana i; /* not valid */
