@@ -36,3 +36,35 @@ In `x = y`:
 
 If the value stored in a variable is required, the compiler emits code to read
 the value from the given address and put it in register.
+
+When the compiler finds something like `ar[10] = 2;`, it can add 10 to the
+address given to `ar` at compile time. For a pointer, the value needs to be
+dereferenced to know it (only possible at runtime) and then read the content of
+this value (the address pointed to).
+```C
+char *p = "abcdef"; /* ... */ c = p[i];
+/* 1. get the value/content in p (ie the pointed address)
+   2. get the value of i, add it to content fetched in 1.
+   3. get the content of address+i
+*/
+
+char p[] = "abcdef"; /* ... */ c = p[i];
+/* 1. get the value of i, add it to address of p (the one given by compiler)
+   2. get the content of address+i
+*/
+```
+Things get wrong when something is defined as an array (`char p[10];`) but read
+as a pointer (`exter char p;`) because the program will interpret ASCII values
+as address. To solve this problem, **always match the declarations with the
+definition**.
+
+###### Other Differences Between Arrays and Pointers
+* pointer:
+    * holds the address of data
+    * data is accessed indirectly (need to first get the address pointed to)
+    * commonly used for dynamic data structures, with `malloc()` and `free()`
+* array:
+    * holds data
+    * data is accessed directly (`a[i] get the content of i location past `a`)
+    * implicitly allocated and deallocated
+
