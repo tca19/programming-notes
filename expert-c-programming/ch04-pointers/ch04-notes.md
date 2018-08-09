@@ -65,6 +65,14 @@ definition**.
     * commonly used for dynamic data structures, with `malloc()` and `free()`
 * array:
     * holds data
-    * data is accessed directly (`a[i] get the content of i location past `a`)
+    * data is accessed directly (`a[i]` get the content of i locations past `a`)
     * implicitly allocated and deallocated
 
+`char *p = "breadfruit";` : the string literal is **read-only**
+
+`char p[] = "breadfruit";` : the string literal is **writable**
+
+> Pointers are one of the hardest parts of C to understand and apply correctly,
+> second only to the syntax of declarations. However, they are also one of the
+> most important parts of C. Professional C programmers have to be proficient
+> with the use of malloc() and pointers to anonymous memory.
