@@ -10,4 +10,7 @@ Chapter 5: Thinking of Linking
 ### Libraries, Linking, and Loading
 Compilers are in fact composed of many smaller programs (preprocessor,
 syntactic/semantic checker, the assembler, the optimizer...), mainly because it
-is easier to maintain many smaller files rather than a large program.
+is easier to maintain many smaller files rather than a single large program.
+
+`cc` can have flags specific to one step with `-W` and then a letter
+representing the step.
