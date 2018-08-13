@@ -18,11 +18,17 @@ represented by the letter `c` so that would give `cc -Wc,-m main.c` to pass the
 flag `-m` only for this step).
 
 **Linking**: action of converting object files to executables. The linker
-identifies the main routine (start of execution), maps symbols to memory
+identifies the main routine (starting point of program), maps symbols to memory
 addresses, regroups all the object files and integrates the required libraries
 to produce the executable.
 
 * **Static linking**: add a copy of library binaries (used to call BIOS routines
   of machine) into each generated executable
 * **Dynamic linking**: store the binary libraries into system, the program will
-  look for them at runtime. No need to add them into the executable
+  include the filename of these libraries so it can look for them at runtime. No
+  need to add them into the executable
+
+No look for libraries is done until a call from this library happens at run time
+so *there's no penalty to linking against a library that you may not call*.
+Dynamic linking is now the norm as it can drastically reduce the executable size
+(e.g. 506kB as 5kB).
