@@ -23,12 +23,12 @@ addresses, regroups all the object files and integrates the required libraries
 to produce the executable.
 
 * **Static linking**: add a copy of library binaries (used to call BIOS routines
-  of machine) into each generated executable
+  of machine) into each generated executable. Use the ̣`.a` files.
 * **Dynamic linking**: store the binary libraries into system, the program will
   include the filename of these libraries so it can look for them at runtime. No
-  need to add them into the executable
+  need to add them into the executable. Use the `.so` files.
 
-No look for libraries is done until a call from this library happens at run time
-so *there's no penalty to linking against a library that you may not call*.
-Dynamic linking is now the norm as it can drastically reduce the executable size
-(e.g. 506kB as 5kB).
+The **runtime loader** does not load libraries until a call from this library
+happens at run time so *there's no penalty to linking against a library that you
+may not call*.  Dynamic linking is now the norm as it can drastically reduce the
+executable size (e.g. 506kB as 5kB).
