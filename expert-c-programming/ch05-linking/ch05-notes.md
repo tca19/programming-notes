@@ -32,3 +32,7 @@ The **runtime loader** does not load libraries until a call from this library
 happens at run time so *there's no penalty to linking against a library that you
 may not call*.  Dynamic linking is now the norm as it can drastically reduce the
 executable size (e.g. 506kB as 5kB).
+
+Dynamic linking trades off more efficient use of the disk and a quicker
+link-edit phase for a small runtime penalty (since some of the linker's work is
+deffered until loadtimes).
