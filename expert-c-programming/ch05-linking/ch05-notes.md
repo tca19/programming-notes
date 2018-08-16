@@ -46,5 +46,7 @@ Dynamic linking has two main advantages:
 * when new version of libraries are installed into the system, executables
   automatically get the benefit, no need of relinking
 
-Dynamic linking adds the path of needed libary. But if the name or location of
-the lib changed, there will be an error when the programm will be run.
+Dynamic linking adds the path of needed libaries. But if the name or location of
+the lib changed, there will be an error when the programm will be run. To create
+a library, simply compile code without a main routine and process the resulting
+`.o` with `ar` or `ld`.
