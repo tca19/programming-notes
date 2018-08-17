@@ -33,9 +33,9 @@ happens at run time so *there's no penalty to linking against a library that you
 may not call*.  Dynamic linking is now the norm as it can drastically reduce the
 executable size (e.g. 506kB as 5kB).
 
-Dynamic linking trades off more efficient use of the disk and a quicker
-link-edit phase for a small runtime penalty (since some of the linker's work is
-deferred until loadtimes).
+Dynamic linking trades off more **efficient use of the disk** and a quicker
+link-edit phase for a **small runtime penalty** (since some of the linker's work
+is deferred until loadtimes).
 
 Dynamic linking has two main advantages:
 * smaller executables (less disk and virtual memory usage), only a part of a
@@ -50,3 +50,8 @@ Dynamic linking adds the path of needed libaries. But if the name or location of
 the lib changed, there will be an error when the programm will be run. To create
 a library, simply compile code without a main routine and process the resulting
 `.o` with `ar` or `ld`.
+
+**PICode** : position-independant code (for libraries). Every global data in the
+code are accessed with an extra indirection (an offset or a pointer). At
+runtime, the offset can be changed to still be able to access such data. Useful
+for shared libraries.
