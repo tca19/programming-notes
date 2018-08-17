@@ -55,3 +55,15 @@ a library, simply compile code without a main routine and process the resulting
 code are accessed with an extra indirection (an offset or a pointer). At
 runtime, the offset can be changed to still be able to access such data. Useful
 for shared libraries.
+
+### Five Special Secrets of Linking with Libraries (you need to master)
+1. Dynamic libraries = ̣̣̣̣̣`lib*.so`, static libraries = `lib*.a`
+2. Link with `libthread.so` with `-lthread` flag (`-lname` for `libname.so`)
+3. Compiler looks for libraries into `/usr/lib/`. Another location can be
+   indicated with `-Lpathname` and `-Rpathname` (the latter for runtime path)
+4. For some `#include`, you need to add compiler flags (`-lm` for `<math.h>`,
+   `-lthread` for `<thread.h>`). `<stdio.h>` rely on `libc.so` and is
+   automatically linked during compilation.
+5. With dynamic libraries, **all** the symbols are available at runtime. With
+   static libraries, only load the **undefined symbols**. Furthermore, add the
+   linking flags **at the end** of compilation command (like `cc main.c -lm).
