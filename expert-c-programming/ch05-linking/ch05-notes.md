@@ -67,3 +67,8 @@ for shared libraries.
 5. With dynamic libraries, **all** the symbols are available at runtime. With
    static libraries, only load the **undefined symbols**. Furthermore, add the
    linking flags **at the end** of compilation command (like `cc main.c -lm).
+
+### Watch Out for Interpositioning
+Interpositioning : the practice of supplanting a library function by a
+user-written function of the same name.
+
