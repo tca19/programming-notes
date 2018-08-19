@@ -51,7 +51,7 @@ the lib changed, there will be an error when the programm will be run. To create
 a library, simply compile code without a main routine and process the resulting
 `.o` with `ar` or `ld`.
 
-**PICode** : position-independant code (for libraries). Every global data in the
+**PICode** : position-independent code (for libraries). Every global data in the
 code are accessed with an extra indirection (an offset or a pointer). At
 runtime, the offset can be changed to still be able to access such data. Useful
 for shared libraries.
@@ -64,11 +64,19 @@ for shared libraries.
 4. For some `#include`, you need to add compiler flags (`-lm` for `<math.h>`,
    `-lthread` for `<thread.h>`). `<stdio.h>` rely on `libc.so` and is
    automatically linked during compilation.
-5. With dynamic libraries, **all** the symbols are available at runtime. With
-   static libraries, only load the **undefined symbols**. Furthermore, add the
-   linking flags **at the end** of compilation command (like `cc main.c -lm).
+5. With dynamic libraries, **all** the symbols are available at runtime (loaded
+   into virtual address space). With static libraries, only load the **undefined
+   symbols**. Furthermore, add the linking flags **at the end** of compilation
+   command (like `cc main.c -lm`). Source files are read from left to right. If
+   the libary is put before the written code, there won't be any undefined
+   symbols so nothing will be extracted at linkink time.
 
 ### Watch Out for Interpositioning
-Interpositioning : the practice of supplanting a library function by a
-user-written function of the same name.
+Interpositioning : the practice of replacing a library function by a
+user-written function of the same name (for performance or debugging purpose).
 
+**This is dangerous** : if the user redefines a function (like `mktemp()`), all
+library functions relying on this function will call the user defined one
+instead of the original one from the library. The problem occure because of
+the **default global scope**. To solve it, user declared functions should be
+**static**.
