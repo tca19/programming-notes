@@ -77,6 +77,36 @@ user-written function of the same name (for performance or debugging purpose).
 
 **This is dangerous** : if the user redefines a function (like `mktemp()`), all
 library functions relying on this function will call the user defined one
-instead of the original one from the library. The problem occure because of
-the **default global scope**. To solve it, user declared functions should be
-**static**.
+instead of the original one from the library. The problem occurs because of
+the **default global scope** of functions. To solve it, user declared functions
+should be **static**.
+
+Use `ldd name_of_executable` to know the dynamic dependencies of a dynamically
+linked executable.
+
+### Challenging the Turing Test
+The test has been created by Alan Turing in 1950. Eliza, created in 1956 was
+able to fool the secretary the doctor who created it. It barely look at the user
+input and return one of the pre-built answer accordingly. It was even able to
+fool the vice-president of Telcomp. Making two of these systems talking to each
+other results in complete non-sense. The program is unable to answer a question.
+
+> The reason it fools people is not because it is intelligent and thus passing
+> the Turing test. It fools people because people are too easy to fool and thus
+> the test is inadequate.
+
+> The central weakness in the Turing test: simply exchanging semi-appropriate
+> phrases does not indicate thought -- we have to look at the content of what is
+> communicated.
+
+Turing was a brilliant theoretician but was often hopeless when it came to
+practical matters. He bought two silver ingots, hid them but then was unable to
+remember their location. He killed himself by eating an apple that he had
+injected with cyanide.
+
+> The Turing test is a triump of theory over practical experience. The
+> difference between theory and practice is a lot bigger in practice than in
+> theory.
+
+In 1983, the Turing Award was given to Dennis Ritchie and Ken Thompson in
+recognition of their work on UNIX and C.
