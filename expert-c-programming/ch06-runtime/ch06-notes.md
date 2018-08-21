@@ -50,3 +50,20 @@ main()
 	  peach = 2.0*mango;                /*            "         */
 }
 ```
+
+* Using the debugging flag `-g` makes the executable size bigger but does not
+  change the segment sizes.
+* Using the optimization flag `-O3` can reduce the text segment size.
+* When an array is defined inside a function (whether initialized or not), it
+  does not change the size of data or bss segments, but increase the text
+  segment size.
+* When a global array is *initialized*, it will move the array from the BSS to
+  the data segment and **increase** the executable size.
+
+### What the OS Does with Your `a.out`
+The running linker takes each segment (text, data, bss) and load them into
+memory. The text segment contains the program instructions and is directly
+copied from `a.out` to memory with `mmap()`. Then does the same things for
+initialized variables from data segment. Then a zeroed block of the same size as
+BSS is claimed by program. Finally, a block of memory is allocated for the stack
+of the program.
