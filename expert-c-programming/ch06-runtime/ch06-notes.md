@@ -24,7 +24,7 @@ Every `a.out` start with the same 4 bytes: `7f`, and the 3 letters `E`, `L` and
 
 `size a.out` : tells the size of 4 segments (text/data/bss/dec) of executable.
 
-BSS (Block started by Symbol or Better Save Space) only holds variable that
+BSS (Block Started by Symbol or Better Save Space) only holds variable that
 don't have any value yet, so it does not store the image of these variables.
 Data segment store the initialized (both global and static) variables.
 Text segment store the executable instructions.
@@ -63,7 +63,37 @@ main()
 ### What the OS Does with Your `a.out`
 The running linker takes each segment (text, data, bss) and load them into
 memory. The text segment contains the program instructions and is directly
-copied from `a.out` to memory with `mmap()`. Then does the same things for
+copied from `a.out` to memory with `mmap()`. Then the same thing happens for
 initialized variables from data segment. Then a zeroed block of the same size as
 BSS is claimed by program. Finally, a block of memory is allocated for the stack
-of the program.
+of the program. Everything is continuous in memory, from the text segment
+(lowest address) to the stack (high address). A heap space is also dynamically
+allocated on demand (like with a `malloc()` call).
+
+When a shared library is also included into the executable, text and data
+segments of the library are also loaded, but **after the text/data segment** of
+the program (and there is a hole between the two).
+
+### What the C Runtime Does with Your `a.out`
+
+#### The Stack Segment
+LIFO memory structure (like a stock of plates in restaurant). Only 2 ops :
+**push** and **pop**. Three major uses :
+* storage of *automatic* variables (local ones created inside functions)
+* *stack frame* : information created when a function is called (parameters,
+  jump-back address)
+* temporary storage of *partial* expression evaluation
+
+A stack is mainly required for **recursive calls**. Without them, everything
+else (automatic variables, return address) could be determined at compile time
+and included into BSS.
+
+C runtime routines are lightweight (that's why it is an efficient language). C
+creates a **procedure activation record** in the stack (a data structure) for
+each call statement executed. In contains information to call a procedure (local
+variables, arguments, pointer to previous frame).
+
+Each time a function is called, a new procedure activation record (PAR) is
+pushed on the stack. If a function is called recursively (like *factorial*),
+each new call produce a new PAR (the stack grows). When it stops calling
+functions, the PAR are unpiled thank to the *previous frame* pointer.
