@@ -97,3 +97,57 @@ Each time a function is called, a new procedure activation record (PAR) is
 pushed on the stack. If a function is called recursively (like *factorial*),
 each new call produce a new PAR (the stack grows). When it stops calling
 functions, the PAR are unpiled thank to the *previous frame* pointer.
+
+Sometimes PAR are stored in registers instead of stack (more efficient).
+
+When using multithread, each thread gets a dedicated stack of 1Mb.
+
+#### The `auto` and `static` keywords
+*dangling pointer* : pointer to something that no longer exists, like the
+address of a local variable of a function once the function has returned. The
+pointer still exist but its content might be overwritten by the stack.
+
+When a variable is defined as `static`, it will be allocated in the data
+segment, not in the stack. The `auto` keyword is **never** needed (because it's
+default behavior).
+
+### Threads of Control
+`longjmp` can jump out of a function (even if it is in a different file), `goto`
+can't. `setjmp` and `longjmp` are mainly used to handle errors recovery.
+
+```C
+
+#include <stdio.h>
+#include <setjmp.h>
+
+jmp_buf buf;
+int banana()
+{
+	  printf("in banana()\n");
+	  longjmp(buf, 1);
+
+	  printf("you'll never see this, because I longjmp'd");
+}
+
+int main(void)
+{
+	  if (setjmp(buf))
+		    printf("back in main\n");
+	  else
+	  {
+		    printf("first time through\n");
+		    banana();
+	  }
+}
+```
+
+### The Stack Segment
+#### Under UNIX
+The stack grows automatically and (almost) indefinitely. When the user try to
+access an address **outside** the allocated stack, the hardware send a *page
+fault* signal. The kernel either stops the program with `Segmentation fault` or
+increase the stack size.
+
+#### Under MS-DOS
+Size if specified at compile time. If program uses more memory than the stack
+size => **STACK OVERFLOW**.
