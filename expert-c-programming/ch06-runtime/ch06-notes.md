@@ -151,3 +151,17 @@ increase the stack size.
 #### Under MS-DOS
 Size if specified at compile time. If program uses more memory than the stack
 size => **STACK OVERFLOW**.
+
+### Helpful C Tools
+* `ldd` : print the dynamic libraries used by an executable
+* `nm` : print the symbol table of an executable
+* `strings` : print the strings embedded into executable
+* `gdb` : debugger. Need to compile with the `-g` flag
+* `time` : measure total and CPU time used by a program
+
+> You can use the hex constants `deadbeef` and `abadcoffee` in your code
+
+At Carnegie-Mellon University, incoming graduates were tested against on their
+programming. This winner was the person who produced the faster `read and
+process all the numbers of this file`. The best program was smashing the stack
+to overwrote the CPU time used variable and made a negative time for the task.
