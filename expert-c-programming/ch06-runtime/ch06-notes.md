@@ -165,3 +165,5 @@ At Carnegie-Mellon University, incoming graduates were tested against on their
 programming. This winner was the person who produced the faster `read and
 process all the numbers of this file`. The best program was smashing the stack
 to overwrote the CPU time used variable and made a negative time for the task.
+The second best one was computing the result, writing the result to a file and
+read back this value during the 2 submission eval.
