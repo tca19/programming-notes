@@ -161,9 +161,29 @@ size => **STACK OVERFLOW**.
 
 > You can use the hex constants `deadbeef` and `abadcoffee` in your code
 
-At Carnegie-Mellon University, incoming graduates were tested against on their
-programming. This winner was the person who produced the faster `read and
+At Carnegie-Mellon University, a programming contest was organized for incoming
+graduate students. The winner was the person who produced the fastest `read and
 process all the numbers of this file`. The best program was smashing the stack
-to overwrote the CPU time used variable and made a negative time for the task.
-The second best one was computing the result, writing the result to a file and
-read back this value during the 2 submission eval.
+to overwrote the CPU time with a large value leading the OS misinterpreting it
+as a negative value (hence a negative execution time). The second best one was
+computing the result, writing the result to a file and read back this value
+during the second submission eval (several submissions were accepted and the one
+with the smaller execution time was kept). These hacks caused the competition to
+be cancelled for the following years.
+
+### Assembly in C
+It is possible to embed assembly code into C code with the keywords `asm` or
+`__asm__`.
+
+```C
+/* copy src to dst; add 1 to dst */
+int src = 1;
+int dst;
+
+asm ("mov %1, %0\n\t"
+    "add $1, %0"
+    : "=r" (dst)
+    : "r" (src));
+
+printf("%d\n", dst);
+```
