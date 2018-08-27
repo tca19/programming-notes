@@ -26,3 +26,19 @@ this one is called Pentium).
 Modern Pentium is a descendant of the 8086 and is backward compatible with it,
 meaning that programs compiled for a 8086 will run on a Pentium.
 
+### The Intel 80x86 Memory Model and How It Got That Way
+A segment can either be a section of related stuff in a binary or a 64 KB range
+in the address space of x86 memory.
+
+When the 8086 overlaps two 16-bit words:
+  * it goes to the right segment (a 64 KB region) using the segment register and
+    shifting it by 4 places (or appending four 0)
+  * goes to the right address within this segment using the offset (i.e. it adds
+    the offset)
+
+2^10: kilo; 2^20: Mega; 2^30: Giga; 2^40: Tera; 2^64: 18 billion billion
+
+With 2^64 addresses, it could be possible to store 36 million of 500GB files.
+The challenge is not about memory *capacity* but about memory *speed*. There is
+an increasing gap between memory and CPU performance : when the CPU speed is
+multiplied by 2 every 1.5 years, memory access time only increase by 10%.
