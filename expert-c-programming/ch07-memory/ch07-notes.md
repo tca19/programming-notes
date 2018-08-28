@@ -78,3 +78,28 @@ not in memory, MMU raise a **page fault**. The kernel handles this event by
 checking if the requested page exist. If yes, it load it from the disk to memory
 and process continue without even knowing it was stopped by a page fault.
 Otherwise, it raise a **segmentation violation**.
+
+### Cache memory
+Extremly fast but small memory either on the CPU or physical memory side of the
+MMU. In the first case, it caches *virtual addresses*, in the second case, it
+caches *physical addresses*.
+
+When data is read from memory, an entire line (16 or 32 bytes) is brought into
+the cache. Future data read can then directly be loaded from cache rather than
+from the slow main memory. The cache contains a list of lines, composed of an
+address and a data section (a block, 32 bytes). The OS look if the requested
+address is already in the cache.
+
+Cache operates at the same speed as the cycle time of the system. Main memory is
+usually 4 times slower.
+
+There are different types of cache : write-through, write-back, instructions
+cache, data cache, I/O bus cache...
+
+> In UNIX, disk inodes are cached in memory. This is why the filesystem can be
+> corrupted by powering the machine off without first flushing the cache to disk
+> with the `sync` command.
+
+Using `memcpy` is ~10x faster than a dumb copy `dest[i] = src[i]` because
+`memcpy` is tuned for high performance and uses SIMD instructions and directly
+copies lines (which are 4-bytes). The naive solution copies bytes by bytes.
