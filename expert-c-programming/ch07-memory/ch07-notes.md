@@ -36,9 +36,45 @@ When the 8086 overlaps two 16-bit words:
   * goes to the right address within this segment using the offset (i.e. it adds
     the offset)
 
+The 8086 has 16 region of 64KB memory (16 * 64KB = 1024KB) but 6 are for the
+system, leaving only 10 (640KB) for the applications. In comparison, the first
+PC came with only 16KB as standard.
+
 2^10: kilo; 2^20: Mega; 2^30: Giga; 2^40: Tera; 2^64: 18 billion billion
 
 With 2^64 addresses, it could be possible to store 36 million of 500GB files.
 The challenge is not about memory *capacity* but about memory *speed*. There is
 an increasing gap between memory and CPU performance : when the CPU speed is
-multiplied by 2 every 1.5 years, memory access time only increase by 10%.
+multiplied by 2 every 1.5 years, memory access time only increases by 10%.
+
+The 8086 memory uses *real-addresses* and every applications run with unlimited
+privileges. There would not be so many PC viruses if MS-DOS used the memory and
+task protection hardware built into every 80x86 processors.
+
+### Virtual Memory
+Virtual memory = using disk space to extend memory. When regions of memory lie
+untouched for a while, they are likely to be saved on the disk, freeing up some
+memory space. At first, this operation was done manually. This is called
+*multilevel store*. The same things happens with registers and main memory.
+
+Memory media (from fast to slow / from low capacity to high capacity)
+* CPU registers
+* Cache
+* Main memory
+* Disk
+
+The memory management unit (MMU) hardware translates virtual addresses to
+physical addresess. Programmers only sees the virtual addresses and can't know
+if their data is in RAM or on disk. They can only know with the command `ps`.
+
+Virtual memory is organized into *pages*, a few KB memory images the OS moves
+from memory to disk (paging out) or from disk to memory (paging in). Paging
+happens in the *swap area*.
+
+**Only user processes ever page and swap. Kernel is always memory-resident**.
+
+Process only operates on pages that are in memory. When it needs a page that is
+not in memory, MMU raise a **page fault**. The kernel handles this event by
+checking if the requested page exist. If yes, it load it from the disk to memory
+and process continue without even knowing it was stopped by a page fault.
+Otherwise, it raise a **segmentation violation**.
