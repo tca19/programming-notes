@@ -115,3 +115,9 @@ available and unvailable regions (with a linked list of available blocks).
 
 Memory obtained with `malloc` can be `freeed` and then reused, but this memory
 can't be given back to the OS until the program terminates.
+
+The end of heap is marked by a pointer known as `break`. When the heap manager
+needs more memory, it calls `brk/sbrk` (routines to adjust size of the data
+segment). `malloc` uses `brk/sbrk` so don't use `sbrk` if you use `malloc`.
+
+### Memory Leak
