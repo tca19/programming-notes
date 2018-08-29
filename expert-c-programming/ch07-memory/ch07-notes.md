@@ -103,3 +103,15 @@ cache, data cache, I/O bus cache...
 Using `memcpy` is ~10x faster than a dumb copy `dest[i] = src[i]` because
 `memcpy` is tuned for high performance and uses SIMD instructions and directly
 copies lines (which are 4-bytes). The naive solution copies bytes by bytes.
+
+### The Data Segment and Heap
+The data segment contains the **heap**. It is used for dynamically allocated
+storage, like `malloc`. Everything in the heap is anonymous. You cannot access
+it by name, only by pointer. `malloc/calloc/realloc` are the only way to get
+storage from the heap.
+
+Unordered `malloc/free` cause heap fragmentation. The heap keeps track of
+available and unvailable regions (with a linked list of available blocks).
+
+Memory obtained with `malloc` can be `freeed` and then reused, but this memory
+can't be given back to the OS until the program terminates.
