@@ -113,11 +113,51 @@ storage from the heap.
 Unordered `malloc/free` cause heap fragmentation. The heap keeps track of
 available and unvailable regions (with a linked list of available blocks).
 
-Memory obtained with `malloc` can be `freeed` and then reused, but this memory
+Memory obtained with `malloc` can be free-ed and then reused, but this memory
 can't be given back to the OS until the program terminates.
 
 The end of heap is marked by a pointer known as `break`. When the heap manager
 needs more memory, it calls `brk/sbrk` (routines to adjust size of the data
 segment). `malloc` uses `brk/sbrk` so don't use `sbrk` if you use `malloc`.
 
-### Memory Leak
+### Memory Leaks
+When a program terminates, all the memory allocated is freed by the OS (even if
+the programmer doesn't write explicit `free` in its program).
+
+If a program has a long execution time (like an OS), it needs to carefully
+manage the memory it uses. Two sources of problem :
+* freeing or overwriting something that is still in use (memory corruption)
+* not freeing something no longer in use (memory leak)
+
+The function `alloca` (used in a function) allocates memory on the stack and
+automatically frees it (so no leak).
+
+> Whenever you write a `malloc`, write a corresponding `free` statement.
+
+*Memory leak* because a scarce resource is draining away in a process. The
+faulty process might be swapped out more often as it becomes larger, and will
+slow down **the entire system**, not only the offending program.
+
+A simple memory leak :
+```C
+for (i = 0; i < 10; ++i)
+    p = malloc(1024);
+```
+
+At each new iteration, the content of `p` is overwritten so the memory address
+can no longer be accessed or freed. It *has leaked* (= is lost).
+
+Memory leaks in the kernel are more dangerous : when a kernel routine asks for
+memory, it usualy waits until some are availabe. If none is available, every
+routine will wait -- the machine is hung.
+
+#### How to Check for a Memory Leak
+Look at the output of the command `free` every 10 seconds. If the available swap
+space keeps decreasing, there might be a memory leak somewhere.
+
+Another command is `ps -lu username` : it shows the size of all processes of
+`username` (in the column `sz`, in pages). If a process size always grows but
+never decreases, it might have a memory leak.
+
+> Some public domain X-Window applications are notorious for leaking like the
+> Apple Computer board of directors.
