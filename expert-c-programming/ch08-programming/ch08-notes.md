@@ -17,3 +17,9 @@ black pixels with the value 1 and white ones with 0. In a program, these
 integers correspond to the value of the bit pattern (like `10110` for `0x16`).
 Some `#define` macros can help to represent hex values as an ascii art (see page
 176 of the book).
+
+### Types Changed While You Wait
+The code `printf(" %d ", sizeof 'A');` will print `4` because `'A'` is an
+integer (a character literal). In an expression, `char`, `short`, `enum` are
+promoted to `int`, `float` are promoted to `double`. This also happens for
+function arguments.
