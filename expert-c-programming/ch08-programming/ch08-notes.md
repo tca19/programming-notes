@@ -23,3 +23,6 @@ The code `printf(" %d ", sizeof 'A');` will print `4` because `'A'` is an
 integer (a character literal). In an expression, `char`, `short`, `enum` are
 promoted to `int`, `float` are promoted to `double`. This also happens for
 function arguments.
+
+In ANSI C, arguments are not promoted if a prototype is used. In `printf`, `%d`
+works for `int`, `short` and `char`.
