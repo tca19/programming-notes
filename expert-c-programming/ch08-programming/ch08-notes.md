@@ -28,3 +28,7 @@ In ANSI C, arguments are not promoted if a prototype is used. In `printf`, `%d`
 works for `int`, `short` and `char`. It is easier for the compiler to convert
 every type to `int` : it no longer need to know the size of each argument, only
 the number of them (when retrieving from the stack).
+
+### Prototype Painfulness
+Prototypes are intended to reduce the number of mismatch between formal and
+actual parameter types.
