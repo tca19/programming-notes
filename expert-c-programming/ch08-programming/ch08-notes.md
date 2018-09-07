@@ -22,7 +22,7 @@ Some `#define` macros can help to represent hex values as an ascii art (see page
 The code `printf(" %d ", sizeof 'A');` will print `4` because `'A'` is an
 integer (a character literal). In an expression, `char`, `short`, `enum` are
 promoted to `int`, `float` are promoted to `double`. This also happens for
-function arguments.
+function arguments (type widening).
 
 In ANSI C, arguments are not promoted if a prototype is used. In `printf`, `%d`
 works for `int`, `short` and `char`. It is easier for the compiler to convert
@@ -31,4 +31,6 @@ the number of them (when retrieving from the stack).
 
 ### Prototype Painfulness
 Prototypes are intended to reduce the number of mismatch between formal and
-actual parameter types.
+actual parameter types. With ANSI C, a function definition is now : `int
+foot(int a, int b) { ... }` instead of `int foo(a, b) int a; int b; { ... }`.
+The declaration of function also indicates the type of each argument.
