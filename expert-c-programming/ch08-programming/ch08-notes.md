@@ -34,3 +34,6 @@ Prototypes are intended to reduce the number of mismatch between formal and
 actual parameter types. With ANSI C, a function definition is now : `int
 foot(int a, int b) { ... }` instead of `int foo(a, b) int a; int b; { ... }`.
 The declaration of function also indicates the type of each argument.
+
+In ANSI C, to express that a function does not take any argument, it needs the
+`void` keyword (`int foo(void)`).
