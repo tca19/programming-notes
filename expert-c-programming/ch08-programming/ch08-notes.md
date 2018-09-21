@@ -36,4 +36,11 @@ foot(int a, int b) { ... }` instead of `int foo(a, b) int a; int b; { ... }`.
 The declaration of function also indicates the type of each argument.
 
 In ANSI C, to express that a function does not take any argument, it needs the
-`void` keyword (`int foo(void)`).
+`void` keyword (`int foo(void)`). When there is no `void`, like `int foo()` it
+is considered to be a declaration prototype in K&R style (number and type of
+arguments where not mandatory in declarations).
+
+With old K&R protoptypes, promoted types are passed (even if an argument is
+defined as a `char`, an `int` was passed when the function is called. **If the
+declaration style is different from the definition style (K&R vs ANSI), it will
+fail. One expect the promoted type, the other one the actual type.**
