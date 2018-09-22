@@ -44,3 +44,12 @@ With old K&R protoptypes, promoted types are passed (even if an argument is
 defined as a `char`, an `int` was passed when the function is called. **If the
 declaration style is different from the definition style (K&R vs ANSI), it will
 fail. One expect the promoted type, the other one the actual type.**
+
+Function prototypes (declarations) should be placed in `.h` files and include in
+the same file containing the definition. That way, the compiler sees both at
+once and can detect mismatch.
+
+### Getting a Char Without a Carriage Return
+On UNIX, terminal input is read line by line (because it needs to be
+preprocessed before being passed to runing program) so user needs to press
+RETURN to send text to program.
