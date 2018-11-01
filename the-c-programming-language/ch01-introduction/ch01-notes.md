@@ -3,8 +3,11 @@ The C programming language (K&R, 2nd edition)
 
 Preface
 -------
+C was designed to be the language of the UNIX system.
+
 ANSI = American National Standard Institute, created in 1983 (and finished in
 1988) "_an unambiguous and machine-independant definition of the language C_".
+ANSI established a modern version of C, for machine independency.
 
 This book describes the C programming language **as defined by the ANSI
 standard** (standard structure assignment and enumerations, new function
@@ -24,9 +27,13 @@ and system programs. C has types :
   * arrays
   * structures
 
-C is a _low level_ languages because it deals with the same sort objects as
-computers (characters, numbers, adresses, operators). C has no native
-multithread support (need an additional library for that).
+**Ken Thompson** wrote language B in 1970 for UNIX systems. **Dennis Ritchie**
+wrote language C between 1969 and 1973. C is a _low level_ languages because it
+deals with the same sort of objects as computers (characters, numbers, adresses,
+operators, pointer arithmetic). No heap or garbage collection. C is not a big
+language (only a few keywords) and you have to call functions for some things
+you would have thought they were builtin (read/write file, string comparison...
+). C has no native multithread support (need an additional library for that).
 
 Chapter 1 : A Tutorial Introduction
 -----------------------------------
