@@ -51,6 +51,10 @@ main()
 Needs to compile with the `-ansi` flag, otherwise the compiler warns us that
 main() needs to explicitly return an int.
 
+Every program **must have** a main somewhere. A C program contains functions and
+variable. Functions contain statement and variables to store values used for
+computation.
+
 Function arguments = one way to communicate data between functions.
 
 `"hello, world\n"` = a sequence of characters in double quotes "", named
@@ -62,13 +66,14 @@ Special characters :
   * `\b` (backspace)
   * `\"` (double quotes)
   * `\\` (backslash)
-  * `\r` (carriage return)
+  * `\r` (carriage return, move back cursor at position 0)
 
 ### 1.2 Variables and Arithmetic Expressions
 `/* */` are used to make comments. In C all variables need to be **declared
 before they are used** (like in `fahrenheit.c`, L 7-8) :
 
 ```C
+/* declaration = type name + list of variables */
 int fahr, celsius;
 int lower, upper, step;
 ```
@@ -76,19 +81,19 @@ int lower, upper, step;
 After the declaration, we initialize the value of these variables with
 **assignment statements** : `lower = 0;`.
 
-In a `while()` loop, the condition in `()` is evaluated. If it is true, the
+In a `while()` loop, the condition in `()` is evaluated everytime. If it is true, the
 statements in the body of the loop are executed. Else, the code moves to the end
 of the loop and continue to execute following statements.
 
 In C, with integer values, `5/9` is `0`, so we first multiply `(fahr-32)` by
-`5`, **then** divide by `9`.
+`5`, **then** divide by `9` : `celsius = 5 * (fahr-32) / 9;`.
 
 The `printf()` function is not a part of the C language, but a function from a
 library, _defined by the ANSI standard_, so the behavior is the same for every
 compiler that conforms to the standard.
 
 ```C
-"%3.0f" -> at least 3 characters wide, no decimal point, float number
+"%3.0f" -> at least 3 characters wide, no decimal point, float number. Align with space if less than 3 characters.
 "%6.1f" -> at least 6 characters wide, 1 decimal point, float number
 "%o"    -> octal representation
 "%x"    -> hexadecimal representation
