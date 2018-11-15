@@ -94,15 +94,17 @@ compiler that conforms to the standard.
 
 ```C
 "%3.0f" -> at least 3 characters wide, no decimal point, float number. Align with space if less than 3 characters.
-"%6.1f" -> at least 6 characters wide, 1 decimal point, float number
+"%6.1f" -> at least 6 characters wide, 1 decimal point, float number. Add spaces if size is less than 6.
 "%o"    -> octal representation
 "%x"    -> hexadecimal representation
 "%c"    -> character
 ```
+You can use directly `(5.0/9.0)*(fahr-32.0)` in `printf()`.
 
 ### 1.3 The For Statement
 The `for` loop is a generalization of the `while` loop. It contains 3 parts :
-**initialization**, **condition** and **incrementation**.
+**initialization** (done once at the beginning), **condition** and
+**incrementation**.
 
 `for(fahr = 0; fahr <= 300; fahr = fahr + 20)`
 
@@ -111,7 +113,9 @@ _Symbolic name (or symbolic constant)_ :
 ```C
 #define name replacement_text
 ```
-They are not variables, so no type. Usually in UPPERCASE.
+They are not variables, so no type. Usually in UPPERCASE. They replace the
+*magic numbers*, the numbers in the code without explicit meaning like `300` and
+`20` in the `for` loop above.
 
 ### 1.5 Character Input and Output
 C deals with **streams of characters (text stream)**. Two main functions :
