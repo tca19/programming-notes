@@ -81,9 +81,9 @@ int lower, upper, step;
 After the declaration, we initialize the value of these variables with
 **assignment statements** : `lower = 0;`.
 
-In a `while()` loop, the condition in `()` is evaluated everytime. If it is true, the
-statements in the body of the loop are executed. Else, the code moves to the end
-of the loop and continue to execute following statements.
+In a `while()` loop, the condition in `()` is evaluated everytime. If it is
+true, the statements in the body of the loop are executed. Else, the code moves
+to the end of the loop and continue to execute following statements.
 
 In C, with integer values, `5/9` is `0`, so we first multiply `(fahr-32)` by
 `5`, **then** divide by `9` : `celsius = 5 * (fahr-32) / 9;`.
@@ -93,7 +93,7 @@ library, _defined by the ANSI standard_, so the behavior is the same for every
 compiler that conforms to the standard.
 
 ```C
-"%3.0f" -> at least 3 characters wide, no decimal point, float number. Align with space if less than 3 characters.
+"%3.0f" -> at least 3 characters wide, no decimal point, float number. Align with spaces if less than 3 characters.
 "%6.1f" -> at least 6 characters wide, 1 decimal point, float number. Add spaces if size is less than 6.
 "%o"    -> octal representation
 "%x"    -> hexadecimal representation
@@ -118,45 +118,78 @@ They are not variables, so no type. Usually in UPPERCASE. They replace the
 `20` in the `for` loop above.
 
 ### 1.5 Character Input and Output
-C deals with **streams of characters (text stream)**. Two main functions :
+C deals with **streams of characters**. A **text stream** is a sequence of lines
+(zero of more characters followed by a newline). Standard library read/write one
+char at a time. Two main functions :
   * `c = getchar()` : reads next input character from a text stream
   * `putchar(c)` : print the character `c`.
 
 `getchar()` returns a special value when there is no more input : **EOF**
 (different from any char value, equal to -1 on my machine). So we need to
-declare `c` as an `int` to be able to handle this value.
+declare `c` as an `int` to be able to handle this value, and also because it can
+sometimes return high values, so `char` is not enough.
 
-We can use assignment in a condition :
+We can directly use assignment in a condition expression :
 ```C
 /* precedence of != is higher than that of =, so without extra parentheses,
-   condition is evaluated as c = (getchar() != EOF) */
-while ((c = getchar()) != EOF)
+   condition is evaluated as c = (getchar() != EOF), and becomes either c = 0 or
+   c = 1. */
+while ((c = getchar()) != EOF) /* easier to read, more compact */
     putchar()
 ```
 
 When counting words or characters, use a long variables : `long nc;` (because it
-can holds larger values, some architectures limit `int` to 16 bits, so 32767 is
-maximum value). Then use `printf("%ld\n", nc)` to print it.
+can holds larger values as some architectures limit `int` to 16 bits, so 32767 is
+maximum value). Then use `printf("%ld\n", nc)` to print it. `printf()` uses `%f`
+for `float` and `double`.
 
 Since the condition in a `while()` or a `for()` loop is evaluated
 **before** entering the loop, the code returns 0 when there is no input.
 
-A line is terminated by a `\n` character so to count number of lines, simply
-count the number of `\n`. A character written between single quotes like `'\n'`
-represents an integer value equal (10) to the numerical value of the character
-in the machine's character set, called an **character constant**. Just another
-way to write a small integer, so `'A'` is 65.
+A line is terminated by a `\n` character, so to count number of lines, simply
+count the number of `\n`.
+
+A character written between single quotes '' represent the integer value of
+chracter, called a **character constant**: `'A'` **IS** `65` (equivalent),
+`'\n'` **IS** `10`.
+
+We can initialize multiple variables at once with `nl = nw = nc = 0`.
 
 A word is any sequence of characters that does not contain a blank, tab or
 newline. To count words :
-  * initialize a state variable to OUT
+  * initialize a state variable to OUT `[1]`
   * increment a counter nw each time there is a non-blank character and state is
-    OUT. Set state to IN
-  * each time there is a blank character, set state to OUT
+    OUT. Set state to IN `[2]`
+  * each time there is a blank character, set state to OUT `[3]`
 
-We can initialize multiple variables at once with `nl = nw = nc = 0`.  In a long
-boolean expression, passive evaluation is applied so it stops to evaluate once
-it knows the final boolean value.
+```C
+#define IN 1
+#define OUT 0
+
+int main(void)
+{
+    int c, nl, nw, state;
+    nl = nw = nc = 0;
+    state = OUT; /* [1] */
+    while ((c = getchar()) != EOF)
+    {
+        ++nc;
+        if (c == '\n') ++nl;
+        if (c == ' ' || c == '\n' || c == '\t')
+            state = OUT; /* [3] */
+        else if (state == OUT)
+        {
+            ++nw;
+            state = IN;
+        }
+    }
+    printf("%d %d %d\n", nl, nw, nc);
+    return 0;
+}
+```
+
+In a long boolean expression, passive evaluation is applied so it stops to
+evaluate once it knows the final boolean value.
 
 ### 1.6 Arrays
 To declare an array : `int ndigit[10];`.
