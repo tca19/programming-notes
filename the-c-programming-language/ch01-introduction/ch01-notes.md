@@ -250,9 +250,14 @@ is the adress of first cell of array). So a function can directly modify an
 array.
 
 ### 1.9 Characters Arrays
-A function `getline()` needs to return a signal about possible EOF. We can set
+*Idea*: read stream line by line, test if current line is longer than currently
+saved one and save it if so. Then print the longest line. You can easily divide
+this program with two functions: `getline` and `copy`.
+
+The function `getline()` needs to return a signal about possible EOF. We can set
 it to return the length of the line, or `0` if EOF is encountered (even a blank
-line has at least one `\n` character.
+line has at least one `\n` character, so a blank line is not considered as EOF).
+`0` is perfect because `0` is never a valid line length.
 
 We can declare empty `for` and `while` loop with a semi colon `;` :
 ```C
@@ -265,6 +270,17 @@ while (...)
 
 Function that operates on arrays of characters :
 ```C
+int getline(char s[], int lim) /* int is default return type, can be omitted */
+{
+    int c, i;
+    for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; ++i)
+        s[i] = c;
+    if (c == '\n')
+        s[i++] = c;
+    s[i] = '\0';
+    return i;
+}
+
 void copy(char to[], char from[])
 {
     int i;
@@ -274,33 +290,38 @@ void copy(char to[], char from[])
 }
 ```
 
-`int` is the default return type, we can omit it in function declaration (like
-we did with only `main() {...}`. If a function does not return something that is
-reused, its type is `void`. In C, all arrays of characters (**string constant**)
-are terminated by the `\0` (_null character_) symbol.
+If a function does not return something that is reused, its type is `void`. In
+C, all arrays of characters (**string constant**) are terminated by the `\0`
+(_null character_) symbol.
 
 ### 1.10 External Variables and Scope
-Variables declared in one function are **private** : no other functions can
-access them. Local variables (_automatic variables_) in a function are created
-when the function is called but disappears when the function is exited.
-
-**External variables** are declared **once** outside functions and are globally
-accessible. Moreover, they retain their values when a function that uses them is
+Variables declared in one function are **local** and **private** : no other
+functions can access them. Local variables (_automatic variables_) in a function
+are created when the function is called but disappears when the function is
 exited.
+
+* **Argument**: communicate data between functions.
+* **External variables**: declared **once** outside functions, globally
+  accessible to all functions. Moreover, they retain their value when a function
+  that uses them ends.
 
 ```C
 
-/* outside any functions (like a standard variable definition) */
+/* outside any functions (like a standard variable definition). In general after
+the #define. */
 int max;
 char line[100];
 
-/* inside a function (add extern before definition) */
+/* inside a function (add `extern` before definition) */
 extern int max;
 extern char line[];
 ```
-Usually, external variables are defined at the beginning of the same file, so
-the`extern` declaration in function can be omitted. If a variable is used across
-several files, the external variable must be defined in a _header file_.
+Variables must be declared in function to access it, so either need an explicit
+`extern`, or it is implicit from the context. Usually, external variables are
+defined at the beginning of the same file, so the`extern` declaration in
+function can be omitted. If a variable is used across several files, the
+external variable must be defined in a _header file_. **DO NOT** overuse
+external variables: data connections are not obvious / program hard to modify.
 
 For compatibility, functions with no arguments should have `void` as their
 argument.
