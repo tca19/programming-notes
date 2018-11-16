@@ -149,8 +149,8 @@ Since the condition in a `while()` or a `for()` loop is evaluated
 A line is terminated by a `\n` character, so to count number of lines, simply
 count the number of `\n`.
 
-A character written between single quotes '' represent the integer value of
-chracter, called a **character constant**: `'A'` **IS** `65` (equivalent),
+**Character constant** : a character written between single quotes ' '
+represents the integer value of this character: `'A'` **IS** `65` (equivalent),
 `'\n'` **IS** `10`.
 
 We can initialize multiple variables at once with `nl = nw = nc = 0`.
@@ -179,7 +179,7 @@ int main(void)
             state = OUT; /* [3] */
         else if (state == OUT)
         {
-            ++nw;
+            ++nw; /* [2] */
             state = IN;
         }
     }
@@ -197,8 +197,8 @@ To declare an array : `int ndigit[10];`.
 We can use character constant to find if a character is a digit and its numeric
 value :
 ```C
-if (c >= '0' && c <= '9')
-    ++ndigit[c-'0'];
+if (c >= '0' && c <= '9') /* test if c is a digit */
+    ++ndigit[c-'0']; /* count number of occurrences of each digit in string */
 ```
 
 ### 1.7 Functions
@@ -218,6 +218,7 @@ return-type function-name(parameter declaration, if any)
 }
 */
 
+/* the variable name `base`, `n` are local; another function can use the same */
 int power(int base, int n)
 {
     /* ... */
@@ -228,13 +229,25 @@ int power(int base, int n)
 definition
 * **argument** : value used in a call of the function
 * **function prototype** : to indicate what is the value returned by a function
-  and the type of expected arguments (`int power(int base, int n);`)
+  and the type of expected arguments (`int power(int base, int n);`). Introduced
+  by ANSI C.
+
+Parameter names are optional in a function prototype, but names provide good
+self-documentation.
+
+If a function definition does not agree with its prototype => ERROR.
 
 ### 1.8 Arguments - Call by Value
 In C, all function arguments are passed by **value** (functions receive a local
-copy, not the original variable). So they can directly be used as a variable.
+copy, not the original variable). So they can directly be used as a variable,
+but they can not alter the original variable, only its private temporary copy.
+
+Parameters can be seen as conveniently initialized local variables = more
+compact code.
+
 The exceptions is with arrays : it is passed as a **reference**, not a copy (it
-is the adress of first cell of array). So a function can modify an array.
+is the adress of first cell of array). So a function can directly modify an
+array.
 
 ### 1.9 Characters Arrays
 A function `getline()` needs to return a signal about possible EOF. We can set
