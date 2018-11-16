@@ -39,10 +39,13 @@ printf("%lu") -> unsigned long
 ### 2.3 Constants
 `long` constants are written with a terminal `l` or `L`. Unsigned contstants are
 written with a terminal `u` or `U` (`ul` or `UL` for `unsigned long`).
-Floating-point constants are written with a terminal `f` or `F`.
+Floating-point constants are written with a terminal `f` or `F`. Scientific
+notation can be used `1e-2`.
 
-Integers can be specified in **octal** (with a leading 0) and **hexadecimal**
-(with a leading 0x).
+Integers can be specified in **octal** (with a leading `0` like `037`) and
+**hexadecimal** (with a leading `0x` like `0x1f`).
+
+`0XFUL` = `unsigned long` equal to 15.
 
 **Character constants** are integers, written as a simple character (`'r'`). Its
 value is the numeric value of the character in the machine's character set. We
@@ -56,12 +59,13 @@ is 0.
 **String constants** (or _string literal_) are sequences of zero or more
 characters surrounded by double quotes like `"hello world"`. String constants
 are _concatenated at compile time_ so `"hello" ", world"` is equivalent to
-`"hello, world"`. This can be useful to split long string on several lines. The
-storage needed to store a string is LEN+1 (need to store the implicit `\0`
-character). Function to compute length of a string :
+`"hello, world"`. **This can be useful to split long string on several lines.**
+Be careful, `'x' (int) != "x" (string)`. The storage needed to store a string is
+LEN+1 (need to store the implicit `\0` character). Function to compute length of
+a string :
 
 ```C
-/* strlen: return length of s, excluding the \0 character */
+/* strlen: return length of s, excluding the \0 character. Available in <string.h> */
 int strlen(char s[])
 {
     int i;
@@ -73,12 +77,14 @@ int strlen(char s[])
 
 **Enumeration constants** : a list of constant integer values like `enum boolean
 {NO, YES};` (alternative to `#define`). First name in an enumeration has value
-0, the second one has value
-1 and so on. We can also specify the value of each element in an enumeration :
+0, the second one has value 1 and so on. We can also specify the value of each
+element in an enumeration :
 ```C
 enum escape {BELL = '\a', BACKSPACE = '\b', TAB = '\t',
              NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
+enum months {JAN = 1, FEB,..., DEC}; /* FEB = 2 because enum starts with 1 */
 ```
+Advantage over `#define` => value are generated automatically.
 
 ### 2.4 Declarations
 A declaration specifies a type and contains a list of one or more variable of
