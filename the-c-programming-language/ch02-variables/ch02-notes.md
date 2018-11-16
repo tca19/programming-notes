@@ -3,23 +3,32 @@ The C programming language (K&R, 2nd edition)
 
 Chapter 2 : Types, Operators, and Expressions
 ---------------------------------------------
+Variables/constants are basic data objects manipulated in a program. Operators
+specify what is to be done to them. Expressions combine variables+operators to
+compute new values.
 
 ### 2.1 Variable Names
 First character in a variable name **must be a letter (or _)**. Usually, lower
 case for variable names, UPPER CASE for symbolic constants. Keywords like `if,
-else, int, float` must be in lower case.
+else, int, float` must be in lower case. Short name for loop indices, long name
+for external variables.
+
+Only first 31 characters are significant in a variable name.
 
 ### 2.2 Data Types and Sizes
 Only 4 basic data types :
-  * char (1 byte)
-  * int
-  * float (single-precision floating point)
-  * double (double-precision floating point)
+  * `char` (1 byte)
+  * `int`
+  * `float` (single-precision floating point)
+  * `double` (double-precision floating point)
 
-Can add the word `short` and `long` for `int`. `short` is at least 16 bits,
-`long` is at least 32 bits and `int` is either 16 or 32 bits.
+Can add the specifier `short` and `long` for `int`. `short` is at least 16 bits,
+`long` is at least 32 bits and `int` is either 16 or 32 bits. `float` is 32
+bits, `double` is 64 bits and `long double` is 128 bits.
 
-Can also specify `unsigned` (positive or zero) or `signed` for `int` and `char`.
+Can also add the qualifier `unsigned` (positive or zero) or `signed` for `int`
+and `char`.
+
 ```C
 printf("%d") -> int/short/char
 printf("%u") -> unsigned int/unsigned short/unsigned char
