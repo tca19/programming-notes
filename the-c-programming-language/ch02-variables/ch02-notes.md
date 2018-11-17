@@ -84,26 +84,27 @@ enum escape {BELL = '\a', BACKSPACE = '\b', TAB = '\t',
              NEWLINE = '\n', VTAB = '\v', RETURN = '\r' };
 enum months {JAN = 1, FEB,..., DEC}; /* FEB = 2 because enum starts with 1 */
 ```
-Advantage over `#define` => value are generated automatically.
+Advantage over `#define` => values are generated automatically.
 
 ### 2.4 Declarations
-A declaration specifies a type and contains a list of one or more variable of
-that type :
-```
+A declaration specifies a **type** and contains a **list of one or more
+variables** of that type :
+```C
 int lower, upper, step;
 char c, line[1000];
 ```
 
-We can also initialize a variable in its declaration :
+We can also directly initialize a variable in its declaration :
 ```C
 int limit = MAXLINE-1;
 float eps = 1.0e-5;
 ```
 
-Initializer must be a constant expression. External and static variables are
-**initialized to zero** by default.
+Initializer must be a constant expression. *External* and *static* variables are
+**initialized to zero** by default. *Automatic* variables with no explicit
+initialization have **garbage value**.
 
-We can add the keyword `const` to specify that the variable value will not be
+Add the keyword `const` to specify that the variable value will not be
 modified (same thing goes with an array). We can also add `const` in a function
 argument list to indicate that an array will not be modified.
 ```C
@@ -118,7 +119,7 @@ They are `+, -, *, /, %`. We **cannot** apply `%` on **float and double**. `*, /
 
 ### 2.6 Relational and Logical Operators
  * **Relational operators** : `>, >=, <, <=`, all the same precedence. Also the
-   `==` and `!=`.
+   `==` and `!=` but they have higher precedence than the others.
 
  * **Logical operators** : `&&` and `||`. Evaluation of an expresion stops when
    the output of evaluation is known (_passive evaluation_).
