@@ -274,12 +274,13 @@ In two's complement number system, `x &= (x-1)` **deletes the rightmost 1-bit**
 in x.
 
 ### 2.11 Conditional Expressions
-Using the **ternary operator** `?:` (expr1) ? expr2 : expr3. If expr1 is true,
-then expr2 is evaluated, otherwise expr3 is evaluated.
+`(expr1) ? expr2 : expr3` : evaluate `expr1`. If true, evaluate `expr2` else
+evaluate `expr3`. Parentheses `()` around `expr1` are optional but easier to
+read.
 ```C
 z = (a > b) ? a : b;   /* z = max(a, b) */
 
-/* print an array, 10 elements by line, each colum separated by a blank */
+/* print an array, 10 elements per line, each column separated by a blank space */
 for (i = 0; i < n; ++i)
     printf("%6d%c", a[i], (i%10 == 9 | i==n-1) ? '\n' : ' ');
 
@@ -301,11 +302,12 @@ high-priority) :
   * `|`
   * `&&`
   * `||`
-  * `?:`
+  * `? :`
   * `= += -= (all other assignment operators)`
   * `,`
 
 In the expression `x = f() + g()`, the order of evaluation is not defined.
 Sometimes `f()` is executed first, sometimes it's `g()`, so **be careful** if
 one of them modify a variable also used by the other. We can store intermediate
-result in a _temporary variable_ to ensure the order.
+result in a _temporary variable_ to ensure the order. **Don't do stupid
+undefined behavior things** like `printf("%d %d", ++n, power(2, n))`.
