@@ -215,7 +215,8 @@ void strcat(char s[], char t[])
 ```
 
 ### 2.9 Bitwise Operators
-Six operators for bit manipulations; only on integers (char, short, int, long).
+Six operators for bit manipulations; only on integers (`char`, `short`, `int`,
+`long`).
   * `&    (AND)`
   * `|    (OR)`
   * `^    (XOR)`
@@ -228,11 +229,14 @@ Right shifting **unsigned** integer always fill with vacated bits with `0` while
 it depends on the machine architecture for **signed** integers.
 
 `~` converts each 1 to 0 and each 0 to 1. So `~0` is all 1 bits.
+
+`n = n & 0177` sets all bits of `n` to 0 except the low-order 7 bits.
 ```C
-/* getbits: get n bits from position p */
+/* getbits: get n bits (right) from position p */
 unsigned getbits(unsigned x, int p, int n)
 {
-    /* ~(~0 << n) is a mask of the rightmost n bits */
+    /* ~(~0 << n) is a mask to keep the n rightmost bits (0000..11111).
+       x >> (p+1-n) removes the rightmost (p-n) bits */
     return (x >> (p+1-n)) & ~(~0 << n);
 }
 ```
@@ -242,7 +246,7 @@ unsigned getbits(unsigned x, int p, int n)
 is equivalent to `x = x * (y + 1)`. (_preferable for conciseness and
 readability_).
 ```C
-/* bitcount: count 1 bits in x */
+/* bitcount: count bits set to 1 in x */
 int bitcount(unsigned int x)
 {
     int b;
@@ -252,10 +256,22 @@ int bitcount(unsigned int x)
             ++b;
     return b;
 }
+
+/* fastbitcount: count bits set to 1 in x, fast version */
+int fastbitcount(unsigned x)
+{
+    int b;
+
+    for (b = 0; x != 0; x &= x-1)
+        ++b;
+    return b;
+}
 ```
 In code above, we indicate that x is **unsigned** so when it is right shifted,
-vacated bits are filled with `0`, not sign bits. In two's complement number
-system, `x &= (x-1)` **deletes the rightmost 1-bit** in x.
+vacated bits are filled with `0`, not sign bit.
+
+In two's complement number system, `x &= (x-1)` **deletes the rightmost 1-bit**
+in x.
 
 ### 2.11 Conditional Expressions
 Using the **ternary operator** `?:` (expr1) ? expr2 : expr3. If expr1 is true,
