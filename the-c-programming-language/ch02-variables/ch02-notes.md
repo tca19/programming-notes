@@ -129,9 +129,10 @@ is higher than assignement, that's why we need parentheses in `(c = getchar())
 != '\n'`.
 
 ### 2.7 Type Conversions
-In `a+b`, if `a` and `b` are not of the same type, one of them is converted,
-usually the "narrower" becomes "wider" (like int to float) so no loss of
-information. Most of the time, `char` is used as an integer :
+In `a+b`, if `a` and `b` are not of the same type, one of them is
+**automatically** converted, usually the "narrower" becomes "wider" (like ̣`int`
+to `float`) so no loss of information. Most of the time, `char` is used as an
+integer :
 ```C
 /* atoi: converts s to integer */
 int atoi(char s[])
@@ -143,18 +144,27 @@ int atoi(char s[])
 
     return n;
 }
+
+/* lower: turn c into a lowercase letter */
+int lower(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return c + 'a' - 'A';
+    else
+        return c;
+}
 ```
 Some conversion function are implemented in `<ctype.h>` :
   * `tolower(c)`
   * `isdigit(c)`
 
-**BE CAREFUL** : when converting a char with leftmost bit set to 1 to integer,
-it can becomes negative (depends on the architecture of the machine). It is
+**BE CAREFUL** : when converting a `char` with leftmost bit set to 1 to `int`,
+it can become negative (depends on the architecture of the machine). It is
 better to indicate if such char is `signed` or `unsigned`.
 
-Floats are not automatically converted to double (but most of the functions in
-`<math.h>` use double). The main reason to use float is to save storage in large
-arrays, or save time in computations (less expensive than using double).
+`float` are not automatically converted to `double` (but most of the functions
+in `<math.h>` use double). The main reason to use `float` is to save storage in
+large arrays, or save time in computations (less expensive than using `double`).
 
 Conversion rules :
   * if either operand is `long double`, convert the other to `long double`
@@ -165,6 +175,8 @@ Conversion rules :
 
 We can force conversion with `(type) expression;` (cast). A cast does not change
 the value of the expression.
+
+Portable implementation for PRNG:
 ```C
 unsigned long int next = 1;
 
@@ -185,8 +197,8 @@ void srand(unsigned int seed)
 ### 2.8 Increment and Decrement Operators
 With **prefix** (`++n`), n is incremented before its value is used). With
 **postfix** (`n++`) n is incremented after its value is used.
-Increment/Decrement operators can only be applied to variables (not on 3 for
-example).
+Increment/Decrement operators *can only be applied to variables* (so you cannot
+see 3++).
 ```C
 /* strcat: concatenate t to end of s; s must be big enough */
 void strcat(char s[], char t[])
@@ -196,6 +208,7 @@ void strcat(char s[], char t[])
     i = j = 0;
     while (s[i] != '\0')               /* move to end of s */
         ++i;
+    /*while (s[i++] = '\0');*/         /* similar */
     while ((s[i++] = t[j++]) != '\0')  /* copy t */
         ;
 }
