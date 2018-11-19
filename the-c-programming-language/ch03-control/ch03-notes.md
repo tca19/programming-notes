@@ -5,13 +5,13 @@ Chapter 3 : Control Flow
 ------------------------
 
 ### 3.1 Statements and Blocks
-**Statement** : expression followed by a _statement terminator_ `; ` (`x = 0;`)
+**Statement** : expression followed by a _statement terminator_ `;` : (`x = 0;`)
 
-**Block (or compound statement)** : grouped statements with `{ }` so they act
+**Block (or compound statement)** : statements grouped with `{ }` so they act
 like a single statement (function body or if-else block).
 
 ### 3.2 If-Else
-`if`/`else` is always followed by statements. `else` part is _optional_ but
+`if/else` is always followed by statements. `else` part is _optional_ but
 sometimes can be ambiguous without it :
 ```C
 /* test if expression has a non-zero value */
@@ -42,21 +42,34 @@ Last `else` can also be omitted, but usually is used to catch an _impossible_
 situation.
 
 ### 3.4 Switch
-To test whether an expression matches a _constant integer value_ :
+To test whether an expression matches one or multiple  _constant integer
+values_ :
 ```C
 switch (expression)
 {
     case const-expr:
-        statements
-        break;
+        statements;
+        break; /* cause immediate exit of swicth. Can also use return to exit */
     case const-expr:
-        statements
+        statements;
         break;
     case const-expr1: case const-expr2: case const-expr3:
-        statements
+        statements;
         break;
     default:
-        statements
+        statements;
+        break;
+}
+
+/* example to count occurrence of each character type */
+switch (c)
+{
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+        ++ndigits[c-'0'];
+        break;
+    case ' ': case '\n': case '\t':
+        ++nwhite;
         break;
 }
 ```
@@ -76,20 +89,23 @@ while (expr2)
 }
 ```
 `for (;;)` is an **infinite** loop. `for` loop is preferable when there is an
-initialization and an increment step.
+*initialization* and an *increment* step. At the end of `for` loop that uses
+variable `i`, the value remains in `i`.
 
-From `<ctype.h>`, there are the functions `isspace()` and `isdigit()`.
+From `<ctype.h>`, there are the functions `isspace()`, `isdigit()` and
+`strtol()` (string to long).
 
 We can place multiple expressions in the same part of a `for` loop with the `,`
 operator :
 ```C
-#include <string.h>
+#include <string.h> /* strlen */
 
 /* reverse: reverse string s in place */
 void reverse(char s[])
 {
     int c, i, j;
 
+    /* can manage two indexes (i, j) in parallel in for loop */
     fot (i = 0, j = strlen(s)-1; i < j; i++, j--)
     {
         c = s[i];
@@ -104,8 +120,8 @@ void reverse(char s[])
 
 ### 3.6 Loops - Do-While
 In a `do-while` loop, the termination condition is tested **after** the loop
-body (not **before** like the other two loops) -> _therefor, the body is always
-executed at least once_.
+body (not **before** like the other two loops) -> _therefore, the body is always
+executed **at least once**_.
 ```C
 /* itoa: convert n to characters in s */
 void itoa(int n, char s[])
@@ -116,7 +132,7 @@ void itoa(int n, char s[])
         n = -n;         /* make n positive */
     i = 0;
     do
-    {           /* generate digits in reverse order */
+    {   /* generate digits in reverse order */
         s[i++] = n % 10 + '0';   /* get next digit */
     } while (( n /= 10) > 0);    /* delete it */
 
