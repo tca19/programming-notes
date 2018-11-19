@@ -115,7 +115,7 @@ void ungetch(int c)
         buf[bufp++] = c;
 }
 ```
-Original `ungetc()` only stores 1 char (not a whole stack).
+Original `ungetc()` only stores 1 `char` (not a whole stack).
 
 ### 4.4 Scope Rules
 Functions are external variables because they are not declared inside functions.
@@ -131,9 +131,9 @@ time: some are in different files, some are precompiled in libraries.
   `sp` and `val` were accessible to `pop()` and `push()` but not to `main()`
   because they were defined **AFTER**.
 
-The line `int sp;` is a **definition** (storage is set aside) but `extern int
-sp;` is a **declaration** (only announces the type and name of `sp`, do not
-create the variable or reserve storage for it).
+* `int sp;`: a **definition**, storage is set aside.
+* `extern int sp;` a **declaration**, only announces the type and name of
+`sp`, do not create the variable or reserve storage for it.
 
 Only 1 definition for external variables among all the files of the program.
 Array size are obligatory in definitions but not in declarations.
