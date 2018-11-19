@@ -5,17 +5,29 @@ Chapter 4 : Functions and Program Structure
 -------------------------------------------
 
 Functions break large computing tasks into smaller ones, clarifying the whole
-program. Many small functions are better than a few big ones.
+program. They allow clearer code (separate things) and reuse of some parts
+(instead of recreating everything from scratch). Many small functions are better
+than a few big ones.
 
 ### 4.1 Basics of Functions
+Suppose you want to print every input line that has 'ould' in it. A method could
+be:
+```
+while (there's a line)
+    if ('ould' in line)
+        print line
+```
+This program can be split into 3 functions: `getline()`, `strindex(s, t)` and
+`print(s)` instead of having a single main().
+
 We want the function `strindex(s, t)` to return the position in the string `s`
 where the string `t` begins. So the returned position is positive (it's an array
-index). Therefore, _-1 is a good error code_ to indicate that string `t` is not
-found in `s`.
+index). Therefore, `-1` is a _good error code_ to indicate that string `t` is
+not found in `s`. Prefer `> 0` to `!= 0`.
 
 Each function definition has the form :
-```C
-return-type function-name(argument declarations)
+```
+return_type function_name(argument declarations)
 {
     declarations and statements;
 }
@@ -23,27 +35,42 @@ return-type function-name(argument declarations)
 If return type is omitted, `int` is assumed. **Communication between the
 functions is by arguments and values returned by the functions**.  If `main()`
 returns a status code, it can be used by the environment that called the
-program.
+program. You can add parentheses in a return statement (`return (2)`) but they
+are optional. If a function reaches its closing `}` withtout any `return`, it
+returns nothing.
 
 If a program is separated into multiple source files, then `cc main.c getline.c
 strindex.c` will compile each file, producing `main.o, getline.o, strindex.o`
 then link all `*.o` files to produce `a.out`.
 
 ### 4.2 Functions Returning Non-integers
-The (true) `atof()` function is declared in `<stdlib.h>`. We need to tell `main`
-that `atof()` returns something else than an `int`.
+The (true) `atof()` function is declared in `<stdlib.h>`. See an example of
+[atof.c](examples/atof.c).
+
+Compiler can not detect mismatch if a function return type is not the same as
+used type when the function is in another source file. If in `main` we have `sum
++= atof(val)` and the prototype of `atof` has not been declared yet (first time
+the compiler sees it), the compiler assumes it is a name function and returns an
+`int` by default. So we need to tell `main` that `atof()` returns something else
+than an `int`.
 ```C
 int main()
 {
     double sum, atof(char []);
     /* ... */
-        printf("\t%g\n", sum += atof(line)); /* add to sum, print sum */
+    printf("\t%g\n", sum += atof(line)); /* add to sum, print sum */
+}
+
+double atof(char s[])
+{
+    ...
 }
 ```
 If there is no function prototype, a function is **implicitly declared by its
 first appearance** in an expression. If a function does not have an argument
-list, as `double function()`, it means that parameters checking is turned off.
-**Use (void) to declare that a function does not take any arguments**.
+list, as `double function()`, it means that **parameters checking is turned
+off**, not that it takes no argument. Use `f(void)` to declare that a function
+`f` does not take any arguments.
 
 ### 4.3 External Variables
 * External objects : either variables or functions defined in the program,
