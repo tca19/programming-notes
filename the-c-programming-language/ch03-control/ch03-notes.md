@@ -5,24 +5,29 @@ Chapter 3 : Control Flow
 ------------------------
 
 ### 3.1 Statements and Blocks
-**Statement** : expression followed by a semi-colon, like `x = 0;`. `;` is a
-_statement terminator_.
+**Statement** : expression followed by a _statement terminator_ `; ` (`x = 0;`)
 
-**Block (or compound statement)** : grouped statements with `{ }` like function
-body of if-else.
+**Block (or compound statement)** : grouped statements with `{ }` so they act
+like a single statement (function body or if-else block).
 
 ### 3.2 If-Else
-`else` part is _optionnal_ but sometimes can be ambiguous without it :
+`if`/`else` is always followed by statements. `else` part is _optional_ but
+sometimes can be ambiguous without it :
 ```C
+/* test if expression has a non-zero value */
 if (n > 0)
     if (a > b)
         z = a;
     else        /* goes with 2nd if, not first */
         z = b;
 ```
-`else` always goes with the **closest** previous else-less `if`.
+`else` always goes with the **closest** previous else-less `if`. Use `{ }` for
+nested `if` to avoid any confusion (which `if` does this `else` match?). Prefer
+`if (expr)` to `if (expr != 0)`.
 
 ### 3.3 Else-If
+See [binary_search.c](examples/binary_search.c) for a complete example.
+
 ```C
 if (expression)
     statement
@@ -33,7 +38,7 @@ else if (expression)
 else
     statement
 ```
-Last `else` can also be omitted, but usually used to catch an _impossible_
+Last `else` can also be omitted, but usually is used to catch an _impossible_
 situation.
 
 ### 3.4 Switch
