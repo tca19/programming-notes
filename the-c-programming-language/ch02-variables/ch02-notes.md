@@ -30,14 +30,14 @@ Can also add the qualifier `unsigned` (positive or zero) or `signed` for `int`
 and `char`.
 
 ```C
-printf("%d") -> int/short/char
-printf("%u") -> unsigned int/unsigned short/unsigned char
-printf("%ld") -> long
-printf("%lu") -> unsigned long
+printf("%d");  /* -> int/short/char */
+printf("%u");  /* -> unsigned int/unsigned short/unsigned char */
+printf("%ld"); /* -> long */
+printf("%lu"); /* -> unsigned long */
 ```
 
 ### 2.3 Constants
-`long` constants are written with a terminal `l` or `L`. Unsigned contstants are
+`long` constants are written with a terminal `l` or `L`. Unsigned constants are
 written with a terminal `u` or `U` (`ul` or `UL` for `unsigned long`).
 Floating-point constants are written with a terminal `f` or `F`. Scientific
 notation can be used `1e-2`.
@@ -53,8 +53,8 @@ can define character constant in :
   * octal (`\O13` for vertical tab)
   * hexedecimal (`\x7`)
 
-`\0` represents the character with value zero, the **null character**. Its value
-is 0.
+`\0` represents the character with value zero, the **null character `NUL`**. Its
+value is 0.
 
 **String constants** (or _string literal_) are sequences of zero or more
 characters surrounded by double quotes like `"hello world"`. String constants
@@ -160,7 +160,7 @@ Some conversion function are implemented in `<ctype.h>` :
 
 **BE CAREFUL** : when converting a `char` with leftmost bit set to 1 to `int`,
 it can become negative (depends on the architecture of the machine). It is
-better to indicate if such char is `signed` or `unsigned`.
+better to indicate if such `char` is `signed` or `unsigned`.
 
 `float` are not automatically converted to `double` (but most of the functions
 in `<math.h>` use double). The main reason to use `float` is to save storage in
@@ -195,8 +195,8 @@ void srand(unsigned int seed)
 ```
 
 ### 2.8 Increment and Decrement Operators
-With **prefix** (`++n`), n is incremented before its value is used). With
-**postfix** (`n++`) n is incremented after its value is used.
+With **prefix** (`++n`), n is incremented before its value is used. With
+**postfix** (`n++`), n is incremented after its value is used.
 Increment/Decrement operators *can only be applied to variables* (so you cannot
 see 3++).
 ```C
@@ -230,7 +230,8 @@ it depends on the machine architecture for **signed** integers.
 
 `~` converts each 1 to 0 and each 0 to 1. So `~0` is all 1 bits.
 
-`n = n & 0177` sets all bits of `n` to 0 except the low-order 7 bits.
+`n = n & 0177` sets all bits of `n` to 0 except the low-order 7 bits (0177 in
+octal is 127 in decimal).
 ```C
 /* getbits: get n bits (right) from position p */
 unsigned getbits(unsigned x, int p, int n)
@@ -267,7 +268,7 @@ int fastbitcount(unsigned x)
     return b;
 }
 ```
-In code above, we indicate that x is **unsigned** so when it is right shifted,
+In code above, we indicate that x is `unsigned` so when it is right shifted,
 vacated bits are filled with `0`, not sign bit.
 
 In two's complement number system, `x &= (x-1)` **deletes the rightmost 1-bit**
@@ -275,8 +276,9 @@ in x.
 
 ### 2.11 Conditional Expressions
 `(expr1) ? expr2 : expr3` : evaluate `expr1`. If true, evaluate `expr2` else
-evaluate `expr3`. Parentheses `()` around `expr1` are optional but easier to
-read.
+evaluate `expr3`. Parentheses `()` around `expr1` are optional but improve
+readability.
+
 ```C
 z = (a > b) ? a : b;   /* z = max(a, b) */
 
