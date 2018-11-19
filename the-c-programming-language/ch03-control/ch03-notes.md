@@ -144,8 +144,8 @@ void itoa(int n, char s[])
 ```
 
 ### 3.7 Break and Continue
-The `break` statement causes the **innermost** enclosing loop or `switch` to be
-exited immediately.
+The `break` statement causes the **innermost** enclosing `for/while` loop or
+`switch` to be exited immediately.
 ```C
 /* trim: remove trailing blanks, tabs, newlines */
 int trim(char s[])
@@ -159,18 +159,25 @@ int trim(char s[])
     return n;
 }
 ```
-The `continue` statement causes the next iteration of the loop to begin (or go
-to the increment step in the `for` loop).
+The `continue` statement causes the next iteration of the loop to begin:
+  * `while/do while`: go to test part
+  * `for`: go to increment step
+
+`continue` is mostly used to avoid a big condition in a `for/while` loop. It has
+no effect inside a `switch`.
 
 ### 3.8 Goto and Labels
-Most common usage is to exit more than 2 nested loops. Should be **rarely**
-used.
+Most common usage is to exit more than 2 nested loops (because `break` only
+exits 1 loop). Should be **rarely** used. Scope of a label = entire function.
+
 ```C
+/* look two arrays to find common element */
 for (i = 0; i < n; ++i)
     for (j = 0; j < m; ++j)
         if (a[i] == b[i])
             goto found;
 /* didn't find any common element */
 ...
-found:   /* <- a label, same as a variable but colon (:) at the end */
-    /* got one: a[i] == b[j] */
+found:   /* a label, same as a variable but colon (:) at the end */
+/* got one: a[i] == b[j] */
+```
