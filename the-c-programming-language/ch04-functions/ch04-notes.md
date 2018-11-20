@@ -242,7 +242,7 @@ if (n > 0)
 ```
 
 Variables declared inside a block **hide** external variables which have the
-same name. In general, avoid variable names that conceal variable of outer
+same name. In general, avoid variable names that conceal variables of outer
 scope.
 
 ```C
@@ -261,23 +261,27 @@ f(double x)
 ### 4.9 Initialization
 Without explicit initialization, **external and static** variables are
 **guaranteed to be initialized to 0**. Automatic and register variables have
-_undefined_ initial values. We can initialize when we define variables : `long
-day = 1000L * 60L * 60L * 24L;`.
+**undefined** initial values. We can initialize when we define variables :
+`long day = 1000L * 60L * 60L * 24L;`. Explicit assignment is better for
+debugging (easier to see differences between declaration/initialization).
 
 External and static variables **must** be initialized with _constant
-expression_.
+expressions_.
 
 When initializing an array (`int ar[10] = {1, 2, 3}`), if there are fewer
-initializers than the specified size, missing values are set to `0`.
+initializers than the specified size, **missing values are set to `0`**.
 
 We can directly initialize char arrays with a string :
+
 ```C
-char pattern = "ould";
-/* equivalent to char pattern = { 'o', 'u', 'l', 'd', '\0' }; */
+char pattern[] = "ould";
+/* equivalent to char pattern[] = { 'o', 'u', 'l', 'd', '\0' }; */
 ```
 
 ### 4.10 Recursion
-**Recursion** : when a function calls itself.
+**Recursion** : when a function calls itself. Recursion is especially convenient
+for recursively defined structures like trees.
+
 ```C
 #include <stdio.h>
 
@@ -294,8 +298,9 @@ void printd(int n)
     putchar(n % 10 + '0');
 }
 ```
-Another common recursion example is `quicksort(int [], int, int)` (choose pivot,
-create subarrays of elements less/greater than pivot, sort these subarrays).
+Another common recursion example is [quicksort.c](examples/quicksort.c) : choose
+pivot, create subarrays of elements less/greater than pivot, sort these
+subarrays.
 
 ### 4.11 The C Preprocessor
 Two main commands :
@@ -303,23 +308,40 @@ Two main commands :
 
    Any line like `#include "filename"` or `#include <filename>` is replaced by
    the content of the file _filename_. Usually we use `"..."` to  search for
-   files in the same working directory. When an included file is changed, it
-   needs to be recompiled.
+   files in the same working directory and `<...>` for libraries. When an
+   included file is changed, it needs to be recompiled.
 
 2. `#define` (called _Macro Substitution_)
 
-   `#define name replacement-text` : each occurrence of _name_ token will be
-   replaced by _replacement-text_. _replacement-text_ can be written on several
+   `#define name replacement-text` : each occurrence of `name` token will be
+   replaced by `replacement-text`. `replacement-text` can be written on several
    lines with `\` at the end of each line. Replacement **does not take place in
    quoted strings**.
 
-   `#define max(A, B) ((A) > (B) ? (A) : (B))` : use arguments in macros. No
-   data type restriction (works for any data type in A and B). Most of the
-   functions in `<stdio.h>` or `<ctype.h>` are implemented as macros, to avoid
-   the run-time overhead of a function call.
+   `#define max(A,B) ((A)>(B)?(A):(B))` : use arguments in macros. No
+   data type restriction (works for any data type in A and B) but parentheses
+   are mandatory because A or B can be an expression and expressions need to be
+   isolated to not interfere (`x = max(p+q,r+s) = p+q > r+s ? p+q : r+s`).
+
+   Most of the functions in `<stdio.h>` or `<ctype.h>` are implemented as
+   macros, to avoid the run-time overhead of a function call.
 
    A parameter name in the replacement text preceded by `#` is expanded into a
    quoted string with the parameter replaced by the actual argument.
+
    ```C
    #define dprint(expr) printf(#expr " = %d\n", expr)
+
+   dprint(x/y); => printf("x/y" " = %d\n", x/y);
+   ```
+
+   We can use `#undef getchar` if we want to redeclare `char getchar(void)`.
+
+   Can also used conditional inclusions:
+
+   ```C
+   #ifndef HDR /* if HDR is already define, goe directly to #endif */
+   #define HDR
+     /* content of hdr.h goes here */
+   #endif
    ```
