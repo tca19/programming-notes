@@ -129,9 +129,9 @@ time: some are in different files, some are precompiled in libraries.
   Parameters of a function are local variables (because they are passed by value
   and are copies of original) and can only be used in this function.
 * scope external variables/functions : from where it is declared to the end of the
-  file compiled. In the [reverse_polish.c](examples/reverse_polish.c) program,
-  `sp` and `val` were accessible to `pop()` and `push()` but not to `main()`
-  because they were defined **AFTER**.
+  file compiled. In the [reverse_polish.c](examples/reverse_polish.c) calculator
+  program, `sp` and `val` were accessible to `pop()` and `push()` but not to
+  `main()` because they were defined **AFTER**.
 
 * `int sp;`: a **definition**, storage is set aside.
 * `extern int sp;` a **declaration**, only announces the type and name of
@@ -141,24 +141,56 @@ Only 1 definition for external variables among all the files of the program.
 Array size are obligatory in definitions but not in declarations.
 
 ### 4.5 Header Files
-If we want to separate our reverse polish calculator into several files, we
+If we want to separate our reverse Polish calculator into several files, we
 would create :
 * `main.c`
-* `stack.c` (for push, pop and their variables)
+* `stack.c` (for `push/pop` and their variables)
 * `getop.c`
 * `getch.c` (most likely to come from a library)
 
-We need to _centralize_ all declarations and definitions (easier to manage).
-Usually we place this into a **header** file; here `calc.h` :
+Header files are here to **centralize declarations/definitions of shared
+variables** (easier to manage). Up to a certain point, it is better to have only 1 header file
+where everything is centralized (in this case, `calc.h`).
+
 ```C
+/* calc.h */
 #define NUMBER '0'
 void push(double);
 double pop(void);
 int getop(char []);
 int getch(void);
 void ungetch(int);
+
+/* main.c */
+#include <stdio.h>
+#include <stdlib.h>
+#include "calc.h"
+#define MAXOP 100
+main(void)
+{
+  ...
+}
+
+/* getop.c */
+#include <stdio.h>
+#include <ctype.h>
+#include "calc.h"
+getop(char[] s)
+{
+  ...
+}
+
+/* stack.c */
+#include <stdio.h>
+#include "calc.h"
+#define MAXVAL 100
+int sp = 0;
+double val[MAXVAL];
+void push(double v) { ... };
+double pop(void) { ... };
 ```
-Then in each `.c` file, we add the line `#include "calc.h"`.
+
+In each `.c` file, there is the line `#include "calc.h"`.
 
 ### 4.6 Static Variables
 The prefix `static` added to an external variable or function limits its scope to
