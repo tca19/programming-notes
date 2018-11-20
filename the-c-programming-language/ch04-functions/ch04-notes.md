@@ -23,7 +23,8 @@ This program can be split into 3 functions: `getline()`, `strindex(s, t)` and
 We want the function `strindex(s, t)` to return the position in the string `s`
 where the string `t` begins. So the returned position is positive (it's an array
 index). Therefore, `-1` is a _good error code_ to indicate that string `t` is
-not found in `s`. Prefer `> 0` to `!= 0`.
+not found in `s`. Prefer `> 0` to `!= 0`. See implementation in
+[grep.c](examples/grep.c).
 
 Each function definition has the form :
 ```
@@ -50,9 +51,10 @@ The (true) `atof()` function is declared in `<stdlib.h>`. See an example of
 Compiler can not detect mismatch if a function return type is not the same as
 used type when the function is in another source file. If in `main` we have `sum
 += atof(val)` and the prototype of `atof` has not been declared yet (first time
-the compiler sees it), the compiler assumes it is a name function and returns an
-`int` by default. So we need to tell `main` that `atof()` returns something else
-than an `int`.
+the compiler sees it), **the compiler assumes it is a name function and returns
+an `int` by default**. So we need to tell `main` that `atof()` returns something
+else than an `int`.
+
 ```C
 int main()
 {
