@@ -193,37 +193,58 @@ double pop(void) { ... };
 In each `.c` file, there is the line `#include "calc.h"`.
 
 ### 4.6 Static Variables
-The prefix `static` added to an external variable or function limits its scope to
-the rest of that source file.
+The prefix `static` added to an external variable/function limits its scope
+to the source file where it is declared.
+
 ```C
-/* no functions in other files will be able to access these variables */
-static char buf[BUFSIZE];
-static int bufp = 0;
+/* in stack.c */
+
+/* Functions in other files will not be able to access these variables.
+   Only the functions within the same source file can access them. */
+static int sp = 0;
+static double val[MAXVAL];
 ```
 
-Normally, function names are **global**, visible to any part of the entire
-program.  If we add `static` in front of a function name, it **becomes invisible
-outside the file** in which it is declared.
+If something is declared as `static`, you can reuse the same name in other
+files.
 
-If a variable inside a function is declared `static`, it remains in existence
-between each call. So they provide a **private, permanent storage** inside a
-function.
+Normally, function names are **global**, visible to any parts of the entire
+program. If we add `static` in front of a function name, it **becomes invisible
+outside the file** in which it is declared (so its scope is limited to that
+file).
+
+If a variable inside a function is declared as `static`, it remains in
+existence even after the function call is done. So they provide a **private,
+permanent storage** inside a function.
 
 ### 4.7 Register Variables
-`register int x;` : indicate to the compiler that the variable will be used a
-lot so it might be a good idea to put it in register. Compilers can ignore this
-indication. Can only be used on _automatic variables_ and _formal parameters of
-a function_ (`f(register unsigned x, register char n)`.
+To indicate to the compiler that the variable will be used a lot so it might be
+a good idea to put it in registers (may result in smaller and faster program if
+variable is heavily used). Compilers can ignore this indication. Can only be
+used on:
+* _automatic variables_ : `register int x;`
+* _formal parameters of a function_ : `f(register unsigned x, register char n)`
 
 It is **not possible to take the address of a register** variable.
 
 ### 4.8 Block Structure
-We can declare variables inside the block of a compound statement. In this case,
-the scope of these variables is that block (they remain in existence until the
+Variables can be declared inside a `if` block. In that case,
+the scope of these variables is this block (they remain in existence until the
 final `}` of the block).
 
+```C
+if (n > 0)
+{
+    int i; /* hide any previous variable named i */
+    for (i = 0; i < n; ++n)
+    { ... }
+}
+```
+
 Variables declared inside a block **hide** external variables which have the
-same name.
+same name. In general, avoid variable names that conceal variable of outer
+scope.
+
 ```C
 int x;
 int y;
